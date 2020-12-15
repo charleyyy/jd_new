@@ -43,7 +43,7 @@ inputs:
     - timer: # 宠汪汪积分兑换奖品# 宠汪汪偷好友积分与狗# 点点券# 京东直播18豆
         parameters:
           name: joy_reward_joy_steal_necklace_live
-          cronExpression: "10 1 0-16/8,20 * * * *"
+          cronExpression: "0 0 0-16/8,20 * * * *"
           enable: true
           argument: jd_joy_reward&jd_joy_steal&jd_necklace&jd_live
     - timer: # 京东全民开红包 # 进店领豆 # 取关京东店铺商品# 京东抽奖机# 东东小窝# 秒杀红包雨# 健康抽奖机
@@ -64,12 +64,12 @@ inputs:
           cronExpression: "0 15 * * * * *"
           enable: true
           argument: jd_superMarket
-    - timer: # 京豆变动通知 # 京东排行榜 # 领京豆额外奖励 # 京东汽车
+    - timer: # 京豆变动通知 # 京东排行榜 # 领京豆额外奖励 # 京东汽车 #京东健康APP
         parameters:
-          name: bean_change_rankingList_bean_home_car
-          cronExpression: "0 0 10 * * * *"
+          name: bean_change_rankingList_bean_home_car_jdh
+          cronExpression: "0 30 7 * * * *"
           enable: true
-          argument: jd_bean_change&jd_rankingList&jd_bean_home&jd_car
+          argument: jd_bean_change&jd_rankingList&jd_bean_home&jd_car&jd_jdh
     - timer: # 金融养猪#十元街# 京东快递# 金融打卡领年终奖
         parameters:
           name: pigPet_syj_kd_jr_sign
