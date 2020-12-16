@@ -55,7 +55,7 @@ inputs:
     - timer: # 京东天天加速# 天天提鹅
         parameters:
           name: jd_speed_jd_daily_egg
-          cronExpression: "0 8 */3 * * * *"
+          cronExpression: "* 1 0,20,9-23/2 15-31 12 * *"
           enable: true
           argument: jd_speed&jd_daily_egg
     - timer: # 东东超市
