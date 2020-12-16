@@ -43,7 +43,7 @@ inputs:
     - timer: # 宠汪汪积分兑换奖品# 宠汪汪偷好友积分与狗# 点点券# 京东直播18豆
         parameters:
           name: joy_reward_joy_steal_necklace_live
-          cronExpression: " 20 0-16/8,20 * * * *"
+          cronExpression: "0 0 0-16/8,20 * * * *"
           enable: true
           argument: jd_joy_reward&jd_joy_steal&jd_necklace&jd_live
     - timer: # 京东全民开红包 # 进店领豆 # 取关京东店铺商品# 京东抽奖机# 东东小窝# 秒杀红包雨# 健康抽奖机
@@ -55,7 +55,7 @@ inputs:
     - timer: # 直播红包雨
         parameters:
           name: jd_live_redrain
-          cronExpression: "* 1 0,20,9-23/2 15-31 * * *"
+          cronExpression: "* 1 0,20,9-23/2 15-31 12 * *"
           enable: true
           argument: jd_live_redrain
     - timer: # 东东超市
@@ -70,12 +70,12 @@ inputs:
           cronExpression: "0 30 7 * * * *"
           enable: true
           argument: jd_bean_change&jd_rankingList&jd_bean_home&jd_car&jd_jdh
-    - timer: # 金融养猪#十元街# 京东快递# 金融打卡领年终奖
+    - timer: #金融养猪 #十元街 #京东快递 #发现-看一看 #京东赚赚 #金融打卡领年终奖
         parameters:
-          name: pigPet_syj_kd_jr_sign
+          name: pigPet_syj_kd_watch_jdzz_jr_sign
           cronExpression: "0 3 1 * * * *"
           enable: true
-          argument: jd_pigPet&jd_syj&jd_kd&jr_sign
+          argument: jd_pigPet&jd_syj&jd_kd&jd_watch&jd_jdzz&jr_sign
   environment: #  环境变量
     variables: #  环境变量对象
       AAA: BBB # 不要删除，用来格式化对齐追加的变量的
