@@ -136,7 +136,7 @@ async function doChannelsListTask(taskId, taskType) {
 async function helpFriends() {
   await updateInviteCode();
   if (!$.inviteCodes) await updateInviteCodeCDN();
-  if (!$.inviteCodes) await updateInviteCodeCDN('https://gitee.com/lxk0301/updateTeam/raw/master/jd_updateSmallHomeInviteCode.json');
+  if (!$.inviteCodes) await updateInviteCodeCDN("1339241410286108673","1339241467918200834","1339241535623880706");
   for (let item of $.inviteCodes.inviteCode) {
     if (!item) continue
     await createAssistUser(item, $.createAssistUserID || "1318106976846299138");
