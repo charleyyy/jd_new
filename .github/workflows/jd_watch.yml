@@ -4,11 +4,11 @@
 name: jd_watch 京东看一看
 
 on:
-   workflow_dispatch:
-   schedule:
-   - cron: '0 20 * * *'
-   #watch:
-   # types: started
+  workflow_dispatch:
+  schedule:
+    - cron: '0 21 * * *'
+  # watch:
+  #   types: started
   repository_dispatch:
     types: shop
 jobs:
