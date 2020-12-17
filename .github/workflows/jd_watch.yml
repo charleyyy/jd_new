@@ -5,8 +5,8 @@ name: jd_watch 京东看一看
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 16 * * *'
+  #schedule:
+ # - cron: '0 16 * * *'
   # watch:
   #   types: started
   repository_dispatch:
