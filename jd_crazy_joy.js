@@ -33,9 +33,9 @@ let helpSelf = false // 循环助力
 let applyJdBean = 0
 let cookiesArr = [], cookie = '', message = '';
 const inviteCodes = [
-  '9NEHZkUoldSXzw3PxcNGO6t9zd5YaBeE@0gUO7F7N-4HVDh9mdQC2hg==@fUJTgR9z26fXdQgTvt_bgqt9zd5YaBeE',
-  '9NEHZkUoldSXzw3PxcNGO6t9zd5YaBeE@0gUO7F7N-4HVDh9mdQC2hg==@fUJTgR9z26fXdQgTvt_bgqt9zd5YaBeE',
-  '9NEHZkUoldSXzw3PxcNGO6t9zd5YaBeE@0gUO7F7N-4HVDh9mdQC2hg==@fUJTgR9z26fXdQgTvt_bgqt9zd5YaBeE'
+  '9NEHZkUoldSXzw3PxcNGO6t9zd5YaBeE@evkTifKV6qo9QYpO2Zy4Cw==@236px58rge4O5qSJz0JnZw==',
+  '9NEHZkUoldSXzw3PxcNGO6t9zd5YaBeE@evkTifKV6qo9QYpO2Zy4Cw==@236px58rge4O5qSJz0JnZw==',
+  '9NEHZkUoldSXzw3PxcNGO6t9zd5YaBeE@evkTifKV6qo9QYpO2Zy4Cw==@236px58rge4O5qSJz0JnZw=='
 ];
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 if ($.isNode()) {
