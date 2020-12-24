@@ -33,9 +33,8 @@ let helpSelf = false // 循环助力
 let applyJdBean = 0
 let cookiesArr = [], cookie = '', message = '';
 const inviteCodes = [
-  '9NEHZkUoldSXzw3PxcNGO6t9zd5YaBeE@evkTifKV6qo9QYpO2Zy4Cw==@236px58rge4O5qSJz0JnZw==',
-  '9NEHZkUoldSXzw3PxcNGO6t9zd5YaBeE@evkTifKV6qo9QYpO2Zy4Cw==@236px58rge4O5qSJz0JnZw==',
-  '9NEHZkUoldSXzw3PxcNGO6t9zd5YaBeE@evkTifKV6qo9QYpO2Zy4Cw==@236px58rge4O5qSJz0JnZw=='
+  'EdLPh8A6X5G1iWXu-uPYfA==@0gUO7F7N-4HVDh9mdQC2hg==@fUJTgR9z26fXdQgTvt_bgqt9zd5YaBeE',
+  'EdLPh8A6X5G1iWXu-uPYfA==@0gUO7F7N-4HVDh9mdQC2hg==@fUJTgR9z26fXdQgTvt_bgqt9zd5YaBeE'
 ];
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 if ($.isNode()) {
@@ -51,6 +50,7 @@ if ($.isNode()) {
   cookiesArr.reverse();
   cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
   cookiesArr.reverse();
+  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
 }
 !function (n) {
   "use strict";
@@ -190,8 +190,6 @@ if ($.isNode()) {
 
         if ($.isNode()) {
           await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-        } else {
-          $.setdata('', `CookieJD${i ? i + 1 : ""}`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
         }
         continue
       }
@@ -217,8 +215,6 @@ if ($.isNode()) {
 
           if ($.isNode()) {
             await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-          } else {
-            $.setdata('', `CookieJD${i ? i + 1 : ""}`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
           }
           continue
         }
@@ -241,8 +237,6 @@ if ($.isNode()) {
 
           if ($.isNode()) {
             await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-          } else {
-            $.setdata('', `CookieJD${i ? i + 1 : ""}`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
           }
           continue
         }
@@ -325,7 +319,7 @@ function getUserInfo(code = "EdLPh8A6X5G1iWXu-uPYfA==") {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data.success && data.data && data.data.userInviteCode) {
-              console.log(`您的助力码为: ${data.data.userInviteCode}`)
+              console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data.data.userInviteCode}`)
               $.selfCodes.push(data.data.userInviteCode)
               $.nextCode = data.data.userInviteCode
             }
