@@ -52,12 +52,12 @@ inputs:
           cronExpression: "0 10 0 * * * *"
           enable: true
           argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_unbind&jd_lotteryMachine&jd_small_home&jd_ms_redrain&jd_health
-    - timer: # 京东直播红包雨
+    - timer: # 京东天天加速# 天天提鹅
         parameters:
-          name: jd_live_redrain
-          cronExpression: "2 0,20,9-23/2 15-31 12 * *"
+          name: jd_speed_jd_daily_egg
+          cronExpression: "0 8 */3 * * * *"
           enable: true
-          argument: jd_live_redrain
+          argument: jd_speed&jd_daily_egg
     - timer: # 东东超市
         parameters:
           name: jd_superMarket
