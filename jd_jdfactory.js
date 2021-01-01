@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-12-06 18:19:21
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-12-06 22:58:02
+ * @Last Modified time: 2020-12-26 22:58:02
  */
 /*
 东东工厂，不是京喜工厂
@@ -49,10 +49,11 @@ if ($.isNode()) {
   cookiesArr.reverse();
   cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
   cookiesArr.reverse();
+  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
 }
 let wantProduct = ``;//心仪商品名称
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
-const inviteCodes = [`P04z54XCjVWnYaS5m9cZ2b-i31InQ673nMEDfg`, 'P04z54XCjVWnYaS5jQLDmL63XRPlUGXBRk', 'P04z54XCjVWnYaS5m1XTSSpgy4Tyw'];
+const inviteCodes = [`P04z54XCjVWnYaS5u2ak7ZCdan1Bdd2GGiWvC6_uERj`, 'P04z54XCjVWnYaS5m9cZ2ariXVJwHf0bgkG7Uo'];
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
@@ -74,8 +75,6 @@ const inviteCodes = [`P04z54XCjVWnYaS5m9cZ2b-i31InQ673nMEDfg`, 'P04z54XCjVWnYaS5
 
         if ($.isNode()) {
           await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-        } else {
-          $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
         }
         continue
       }
@@ -255,98 +254,100 @@ async function helpFriends() {
   }
 }
 async function doTask() {
-  for (let item of $.taskVos) {
-    if (item.taskType === 1) {
-      //关注店铺任务
-      if (item.status === 1) {
-        console.log(`准备做此任务：${item.taskName}`);
-        for (let task of item.followShopVo) {
-          if (task.status === 1) {
-            await jdfactory_collectScore(task.taskToken);
-          }
-        }
-      } else {
-        console.log(`${item.taskName}已做完`)
-      }
-    }
-    if (item.taskType === 2) {
-      //看看商品任务
-      if (item.status === 1) {
-        console.log(`准备做此任务：${item.taskName}`);
-        for (let task of item.productInfoVos) {
-          if (task.status === 1) {
-            await jdfactory_collectScore(task.taskToken);
-          }
-        }
-      } else {
-        console.log(`${item.taskName}已做完`)
-      }
-    }
-    if (item.taskType === 3) {
-      //逛会场任务
-      if (item.status === 1) {
-        console.log(`准备做此任务：${item.taskName}`);
-        for (let task of item.shoppingActivityVos) {
-          if (task.status === 1) {
-            await jdfactory_collectScore(task.taskToken);
-          }
-        }
-      } else {
-        console.log(`${item.taskName}已做完`)
-      }
-    }
-    if (item.taskType === 10) {
-      if (item.status === 1) {
-        if (item.threeMealInfoVos[0].status === 1) {
-          //可以做此任务
+  if ($.taskVos && $.taskVos.length > 0) {
+    for (let item of $.taskVos) {
+      if (item.taskType === 1) {
+        //关注店铺任务
+        if (item.status === 1) {
           console.log(`准备做此任务：${item.taskName}`);
-          await jdfactory_collectScore(item.threeMealInfoVos[0].taskToken);
-        } else if (item.threeMealInfoVos[0].status === 0) {
-          console.log(`${item.taskName} 任务已错过时间`)
+          for (let task of item.followShopVo) {
+            if (task.status === 1) {
+              await jdfactory_collectScore(task.taskToken);
+            }
+          }
+        } else {
+          console.log(`${item.taskName}已做完`)
         }
-      } else if (item.status === 2){
-        console.log(`${item.taskName}已完成`);
       }
-    }
-    if (item.taskType === 21) {
-      //开通会员任务
-      if (item.status === 1) {
-        console.log(`此任务：${item.taskName}，跳过`);
-        // for (let task of item.brandMemberVos) {
-        //   if (task.status === 1) {
-        //     await jdfactory_collectScore(task.taskToken);
-        //   }
-        // }
-      } else {
-        console.log(`${item.taskName}已做完`)
+      if (item.taskType === 2) {
+        //看看商品任务
+        if (item.status === 1) {
+          console.log(`准备做此任务：${item.taskName}`);
+          for (let task of item.productInfoVos) {
+            if (task.status === 1) {
+              await jdfactory_collectScore(task.taskToken);
+            }
+          }
+        } else {
+          console.log(`${item.taskName}已做完`)
+        }
       }
-    }
-    if (item.taskType === 13) {
-      //每日打卡
-      if (item.status === 1) {
-        console.log(`准备做此任务：${item.taskName}`);
-        await jdfactory_collectScore(item.simpleRecordInfoVo.taskToken);
-      } else {
-        console.log(`${item.taskName}已完成`);
+      if (item.taskType === 3) {
+        //逛会场任务
+        if (item.status === 1) {
+          console.log(`准备做此任务：${item.taskName}`);
+          for (let task of item.shoppingActivityVos) {
+            if (task.status === 1) {
+              await jdfactory_collectScore(task.taskToken);
+            }
+          }
+        } else {
+          console.log(`${item.taskName}已做完`)
+        }
       }
-    }
-    if (item.taskType === 14) {
-      //好友助力
-      if (item.status === 1) {
-        console.log(`准备做此任务：${item.taskName}`);
-        // await jdfactory_collectScore(item.simpleRecordInfoVo.taskToken);
-      } else {
-        console.log(`${item.taskName}已完成`);
+      if (item.taskType === 10) {
+        if (item.status === 1) {
+          if (item.threeMealInfoVos[0].status === 1) {
+            //可以做此任务
+            console.log(`准备做此任务：${item.taskName}`);
+            await jdfactory_collectScore(item.threeMealInfoVos[0].taskToken);
+          } else if (item.threeMealInfoVos[0].status === 0) {
+            console.log(`${item.taskName} 任务已错过时间`)
+          }
+        } else if (item.status === 2){
+          console.log(`${item.taskName}已完成`);
+        }
       }
-    }
-    if (item.taskType === 23) {
-      //从数码电器首页进入
-      if (item.status === 1) {
-        console.log(`准备做此任务：${item.taskName}`);
-        await queryVkComponent();
-        await jdfactory_collectScore(item.simpleRecordInfoVo.taskToken);
-      } else {
-        console.log(`${item.taskName}已完成`);
+      if (item.taskType === 21) {
+        //开通会员任务
+        if (item.status === 1) {
+          console.log(`此任务：${item.taskName}，跳过`);
+          // for (let task of item.brandMemberVos) {
+          //   if (task.status === 1) {
+          //     await jdfactory_collectScore(task.taskToken);
+          //   }
+          // }
+        } else {
+          console.log(`${item.taskName}已做完`)
+        }
+      }
+      if (item.taskType === 13) {
+        //每日打卡
+        if (item.status === 1) {
+          console.log(`准备做此任务：${item.taskName}`);
+          await jdfactory_collectScore(item.simpleRecordInfoVo.taskToken);
+        } else {
+          console.log(`${item.taskName}已完成`);
+        }
+      }
+      if (item.taskType === 14) {
+        //好友助力
+        if (item.status === 1) {
+          console.log(`准备做此任务：${item.taskName}`);
+          // await jdfactory_collectScore(item.simpleRecordInfoVo.taskToken);
+        } else {
+          console.log(`${item.taskName}已完成`);
+        }
+      }
+      if (item.taskType === 23) {
+        //从数码电器首页进入
+        if (item.status === 1) {
+          console.log(`准备做此任务：${item.taskName}`);
+          await queryVkComponent();
+          await jdfactory_collectScore(item.simpleRecordInfoVo.taskToken);
+        } else {
+          console.log(`${item.taskName}已完成`);
+        }
       }
     }
   }
@@ -354,7 +355,8 @@ async function doTask() {
 
 //领取做完任务的奖励
 function jdfactory_collectScore(taskToken) {
-  return new Promise(resolve => {
+  return new Promise(async resolve => {
+    await $.wait(1000);
     $.post(taskPostUrl("jdfactory_collectScore", { taskToken }, "jdfactory_collectScore"), async (err, resp, data) => {
       try {
         if (err) {
