@@ -140,6 +140,7 @@ if ($.isNode()) {
   cookiesArr.reverse();
   cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
   cookiesArr.reverse();
+  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 !(async () => {
@@ -183,12 +184,11 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 
         if ($.isNode()) {
           await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-        } else {
-          $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
         }
         continue
       }
       await jdHealth()
+      await showMsg();
     }
   }
 })()
@@ -201,8 +201,8 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 async function jdHealth() {
   $.bean = 0
   await getTaskList()
-  console.log(`${$.name}浏览次数：${$.task.times}/${$.task.maxTimes}`)
   if($.task) {
+    console.log(`${$.name}浏览次数：${$.task.times}/${$.task.maxTimes}`)
     let i = 0, j = $.task.times
     while(j < $.task.maxTimes) {
       if (!acceptBody[i]) break
@@ -221,8 +221,15 @@ async function jdHealth() {
 }
 
 function showMsg() {
-  return new Promise(resolve => {
-    $.msg($.name, '', `京东账号${$.index} ${$.nickName}\n${message}`);
+  return new Promise(async resolve => {
+    // $.msg($.name, '', `京东账号${$.index} ${$.nickName}\n${message}`);
+    let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
+    if (nowTime > new Date('2020/12/31 23:59:59+08:00').getTime()) {
+      $.msg($.name, '活动已结束', `咱江湖再见\nhttps://github.com/lxk0301/jd_scripts`, {"open-url": "https://github.com/lxk0301/jd_scripts"});
+      if ($.isNode()) await notify.sendNotify($.name + '活动已结束', `咱江湖再见\n https://github.com/lxk0301/jd_scripts`)
+    } else {
+      $.msg($.name, '', `京东账号${$.index} ${$.nickName}\n${message}`);
+    }
     resolve()
   })
 }
@@ -238,7 +245,9 @@ function getTaskList() {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            $.task = data['data']['discTasks'][1]
+            if (data.busiCode === '0') {
+              $.task = data['data']['discTasks'][1]
+            }
           }
         }
       } catch (e) {
