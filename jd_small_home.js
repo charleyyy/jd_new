@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-11-12 11:42:12 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-12-11 14:27:20
+ * @Last Modified time: 2021-1-4 14:27:20
  */
 /*
 东东小窝 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_small_home.js
@@ -45,6 +45,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message = '';
 let isPurchaseShops = false;//是否一键加购商品到购物车，默认不加购
+$.helpToken = [];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -57,6 +58,7 @@ if ($.isNode()) {
   cookiesArr.reverse();
   cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
   cookiesArr.reverse();
+  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
 }
 $.newShareCodes = [];
 const JD_API_HOST = 'https://lkyl.dianpusoft.cn/api';
@@ -81,8 +83,6 @@ const JD_API_HOST = 'https://lkyl.dianpusoft.cn/api';
 
         if ($.isNode()) {
           await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-        } else {
-          $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
         }
         continue
       }
@@ -92,12 +92,12 @@ const JD_API_HOST = 'https://lkyl.dianpusoft.cn/api';
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
-      $.token = $.newShareCodes[i].token;
+      $.token = $.helpToken[i];
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
       if ($.newShareCodes.length > 1) {
+        console.log('----', (i + 1) % $.newShareCodes.length)
         let code = $.newShareCodes[(i + 1) % $.newShareCodes.length]['code']
-        console.log(`\n${$.UserName}去给自己的下一账号${decodeURIComponent(cookiesArr[(i + 1) % $.newShareCodes.length].match(/pt_pin=(.+?);/) && cookiesArr[(i + 1) % $.newShareCodes.length].match(/pt_pin=(.+?);/)[1])}助力\n`)
-        $.log(`自己的下一账号${decodeURIComponent(cookiesArr[(i + 1) % $.newShareCodes.length].match(/pt_pin=(.+?);/) && cookiesArr[(i + 1) % $.newShareCodes.length].match(/pt_pin=(.+?);/)[1])}，助力码为 ${code}`)
+        console.log(`\n${$.UserName} 去给自己的下一账号 ${decodeURIComponent($.newShareCodes[(i + 1) % $.newShareCodes.length]['cookie'].match(/pt_pin=(.+?);/) && $.newShareCodes[(i + 1) % $.newShareCodes.length]['cookie'].match(/pt_pin=(.+?);/)[1])}助力，助力码为 ${code}\n`)
         await createAssistUser(code, $.createAssistUserID);
       }
       console.log(`\n去帮助作者:lxk0301\n`)
@@ -274,25 +274,27 @@ function queryFurnituresCenterList() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data.head.code === 200) {
-              let { buy, list } = data.body;
-              $.canBuyList = [];
-              list.map((item, index) => {
-                if (buy.some((buyItem) => buyItem === item.id)) return
-                $.canBuyList.push(item);
-              })
-              $.canBuyList.sort(sortByjdBeanNum);
-              if ($.canBuyList[0].needWoB <= $.woB) {
-                await furnituresCenterPurchase($.canBuyList[0].id, $.canBuyList[0].jdBeanNum);
-              } else {
-                console.log(`\n兑换${$.canBuyList[0].jdBeanNum}京豆失败:当前wo币${$.woB}不够兑换所需的${$.canBuyList[0].needWoB}WO币`)
-                message += `【装饰领京豆】兑换${$.canBuyList[0].jdBeanNum}京豆失败,原因:WO币不够\n`;
+              if (data.body) {
+                let { buy, list } = data.body;
+                $.canBuyList = [];
+                list.map((item, index) => {
+                  if (buy.some((buyItem) => buyItem === item.id)) return
+                  $.canBuyList.push(item);
+                })
+                $.canBuyList.sort(sortByjdBeanNum);
+                if ($.canBuyList[0].needWoB <= $.woB) {
+                  await furnituresCenterPurchase($.canBuyList[0].id, $.canBuyList[0].jdBeanNum);
+                } else {
+                  console.log(`\n兑换${$.canBuyList[0].jdBeanNum}京豆失败:当前wo币${$.woB}不够兑换所需的${$.canBuyList[0].needWoB}WO币`)
+                  message += `【装饰领京豆】兑换${$.canBuyList[0].jdBeanNum}京豆失败,原因:WO币不够\n`;
+                }
+                // for (let canBuyItem of $.canBuyList) {
+                //   if (canBuyItem.needWoB <= $.woB) {
+                //     await furnituresCenterPurchase(canBuyItem.id, canBuyItem.jdBeanNum);
+                //     break
+                //   }
+                // }
               }
-              // for (let canBuyItem of $.canBuyList) {
-              //   if (canBuyItem.needWoB <= $.woB) {
-              //     await furnituresCenterPurchase(canBuyItem.id, canBuyItem.jdBeanNum);
-              //     break
-              //   }
-              // }
             }
           }
         }
@@ -505,7 +507,7 @@ function createInviteUser() {
                 if (data.body.id) {
                   console.log(`\n您的${$.name}shareCode(每天都是变化的):【${data.body.id}】\n`);
                   $.shareCode = data.body.id;
-                  $.newShareCodes.push({ 'code': data.body.id, 'token': $.token });
+                  $.newShareCodes.push({ 'code': data.body.id, 'token': $.token, cookie });
                 }
               }
             }
@@ -773,6 +775,7 @@ function login(userName) {
           data = JSON.parse(data);
           if (data.head.code === 200) {
             $.token = data.head.token;
+            $.helpToken.push(data.head.token)
           }
         }
       } catch (e) {
