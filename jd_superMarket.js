@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-08-16 18:54:16
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-11-24 08:22:37
+ * @Last Modified time: 2021-1-17 18:22:37
  */
 /*
 东东超市(活动入口：京东APP-》首页-》京东超市-》底部东东超市)
@@ -64,8 +64,6 @@ let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好�
 
         if ($.isNode()) {
           await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-        } else {
-          $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
         }
         continue
       }
@@ -155,11 +153,11 @@ async function doDailyTask() {
         const res = await smtgObtainShopTaskPrize(item.taskId);
         console.log(`\n领取做完任务的奖励${JSON.stringify(res)}\n`)
       }
+      //做任务
       if ((item.type === 1 || item.type === 11) && item.taskStatus === 0) {
         // 分享任务
         const res = await smtgDoShopTask(item.taskId);
         console.log(`${item.subTitle}结果${JSON.stringify(res)}`)
-
       }
       if (item.type === 2) {
         //逛会场
@@ -174,6 +172,15 @@ async function doDailyTask() {
         //关注店铺
         if (item.taskStatus === 0) {
           console.log('开始关注店铺')
+          const itemId = item.content[item.type].itemId;
+          const res = await smtgDoShopTask(item.taskId, itemId);
+          console.log(`${item.subTitle}结果${JSON.stringify(res)}`);
+        }
+      }
+      if (item.type === 9) {
+        //开卡领蓝币任务
+        if (item.taskStatus === 0) {
+          console.log('开始开卡领蓝币任务')
           const itemId = item.content[item.type].itemId;
           const res = await smtgDoShopTask(item.taskId, itemId);
           console.log(`${item.subTitle}结果${JSON.stringify(res)}`);
@@ -255,7 +262,7 @@ function receiveBlueCoin(timeout = 0) {
 //每日签到
 function smtgSign() {
   return new Promise((resolve) => {
-    $.get(taskUrl('smtg_sign'), async (err, resp, data) => {
+    $.get(taskUrl('smtg_sign', {"shareId":"QcSH6BqSXysv48bMoRfTBz7VBqc5P6GodDUBAt54d8598XAUtNoGd4xWVuNtVVwNO1dSKcoaY3sX_13Z-b3BoSW1W7NnqD36nZiNuwrtyO-gXbjIlsOBFpgIPMhpiVYKVAaNiHmr2XOJptu14d8uW-UWJtefjG9fUGv0Io7NwAQ","channel":"4"}), async (err, resp, data) => {
       try {
         // console.log('ddd----ddd', data)
         if (err) {
@@ -753,7 +760,8 @@ function updatePkActivityIdCDN(url = 'https://raw.fastgit.org/lxk0301/updateTeam
 function smtgDoShopTask(taskId, itemId) {
   return new Promise((resolve) => {
     const body = {
-      "taskId": taskId
+      "taskId": taskId,
+      "channel": "18"
     }
     if (itemId) {
       body.itemId = itemId;
@@ -1382,7 +1390,8 @@ function requireConfig() {
       cookiesArr = cookiesData.map(item => item.cookie);
       cookiesArr.reverse();
       cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-      cookiesArr.reverse();
+  cookiesArr.reverse();
+  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
     }
     console.log(`共${cookiesArr.length}个京东账号\n`);
     console.log(`京小超已改版,目前暂不用助力, 故无助力码`)
