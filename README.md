@@ -1,135 +1,142 @@
-## 环境变量说明
+# 不要fork! 请点亮Star
 
-##### 京东(必须)
+## 特别声明: 
 
-| Name                    |   归属   | 属性   | 说明                                                         |
-| :---------------------: | :----------: | --------- | ------------------------------------------------------------ |
-| `JD_COOKIE`             |   京东   | 必须   | 京东cookie,多个账号的cookie使用`&`隔开或者换行。具体获取参考[浏览器获取京东cookie教程](https://github.com/lxk0301/jd_scripts/blob/master/backUp/GetJdCookie.md) 或者 [插件获取京东cookie教程](https://github.com/lxk0301/jd_scripts/blob/master/backUp/GetJdCookie2.md) |
+* 本仓库发布的Script项目中涉及的任何解锁和解密分析脚本，仅用于测试和学习研究，禁止用于商业用途，不能保证其合法性，准确性，完整性和有效性，请根据情况自行判断.
 
-##### 京东隐私安全 环境变量
+* 本项目内所有资源文件，禁止任何公众号、自媒体进行任何形式的转载、发布。
 
-| Name                    |   归属   | 属性   | 说明                                                         |
-| :---------------------: | :----------: | --------- | ------------------------------------------------------------ |
-| `JD_DEBUG`              |   脚本打印log   | 非必须   | 运行脚本时，是否显示log,默认显示。改成false表示不显示，注重隐私的人可以在设置secret -> `Name:JD_DEBUG,Value:false` |
-| `JD_USER_AGENT`         |   京东   | 非必须   | 自定义此库里京东系列脚本的UserAgent，不懂不知不会UserAgent的请不要随意填写内容。具体获取参考此[issue](https://github.com/lxk0301/jd_scripts/issues/127) |
+* lxk0301对任何脚本问题概不负责，包括但不限于由任何脚本错误导致的任何损失或损害.
 
-##### 推送通知环境变量(目前提供`微信server酱`、`pushplus(推送加)`、`iOS Bark APP`、`telegram机器人`、`钉钉机器人`、`企业微信机器人`、`iGot`、`QQ酷推`等通知方式)
+* 间接使用脚本的任何用户，包括但不限于建立VPS或在某些行为违反国家/地区法律或相关法规的情况下进行传播, lxk0301 对于由此引起的任何隐私泄漏或其他后果概不负责.
 
-| Name                    |   归属   | 属性   | 说明                                                         |
-| :---------------------: | :----------: | --------- | ------------------------------------------------------------ |
-| `PUSH_KEY`              |   微信server酱推送   | 非必须 | server酱的微信通知[官方文档](http://sc.ftqq.com/3.version) |
-| `BARK_PUSH`             |   [BARK推送](https://apps.apple.com/us/app/bark-customed-notifications/id1403753865)   | 非必须 | IOS用户下载BARK这个APP,填写内容是app提供的`设备码`，例如：https://api.day.app/123 ，那么此处的设备码就是`123`，再不懂看 [这个图](icon/bark.jpg)（注：支持自建填完整链接即可） |
-| `BARK_SOUND`            |   [BARK推送](https://apps.apple.com/us/app/bark-customed-notifications/id1403753865)   | 非必须 | bark推送声音设置，例如`choo`,具体值请在`bark`-`推送铃声`-`查看所有铃声` |
-| `TG_BOT_TOKEN`          |   telegram推送   | 非必须 | tg推送(需设备可连接外网),`TG_BOT_TOKEN`和`TG_USER_ID`两者必需,填写自己申请[@BotFather](https://t.me/BotFather)的Token,如`10xxx4:AAFcqxxxxgER5uw` , [具体教程](./backUp/TG_PUSH.md) |
-| `TG_USER_ID`            |   telegram推送   | 非必须 | tg推送(需设备可连接外网),`TG_BOT_TOKEN`和`TG_USER_ID`两者必需,填写[@getuseridbot](https://t.me/getuseridbot)中获取到的纯数字ID, [具体教程](./backUp/TG_PUSH.md) |
-| `DD_BOT_TOKEN`          |   钉钉推送   | 非必须 | 钉钉推送(`DD_BOT_TOKEN`和`DD_BOT_SECRET`两者必需)[官方文档](https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq) ,只需`https://oapi.dingtalk.com/robot/send?access_token=XXX` 等于`=`符号后面的XXX即可 |
-| `DD_BOT_SECRET`         |   钉钉推送   | 非必须 | (`DD_BOT_TOKEN`和`DD_BOT_SECRET`两者必需) ,密钥，机器人安全设置页面，加签一栏下面显示的SEC开头的`SECXXXXXXXXXX`等字符 , 注:钉钉机器人安全设置只需勾选`加签`即可，其他选项不要勾选,再不懂看 [这个图](icon/DD_bot.png) |
-| `QYWX_KEY`              |   企业微信推送   | 非必须 | 密钥，企业微信推送 webhook 后面的 key [详见官方说明文档](https://work.weixin.qq.com/api/doc/90000/90136/91770) |
-| `IGOT_PUSH_KEY`         |   iGot推送   | 非必须 | iGot聚合推送，支持多方式推送，确保消息可达。 [参考文档](https://wahao.github.io/Bark-MP-helper ) |
-| `QQ_SKEY`               |   酷推(Cool Push)推送   | 非必须 | 推送所需的Skey,登录后获取Skey [参考文档](https://cp.xuthus.cc/) |
-| `QQ_MODE`               |   酷推(Cool Push)推送   | 非必须 | 推送方式(send或group或者wx，默认send) [参考文档](https://cp.xuthus.cc/) |
-| `PUSH_PLUS_TOKEN`       |   pushplus推送  | 非必须 | 微信扫码登录后一对一推送或一对多推送下面的token(您的Token) [官方网站](http://pushplus.hxtrip.com/)                     |
-| `PUSH_PLUS_USER`        |   pushplus推送  | 非必须 | 一对多推送的“群组编码”（一对多推送下面->您的群组(如无则新建)->群组编码）注:(1、需订阅者扫描二维码 2、如果您是创建群组所属人，也需点击“查看二维码”扫描绑定，否则不能接受群组消息推送)，只填`PUSH_PLUS_TOKEN`默认为一对一推送                    |
-| `TG_PROXY_HOST`         |  Telegram 代理的 IP  | 非必须 | 代理类型为 http。例子：http代理 http://127.0.0.1:1080 则填写 127.0.0.1 |
-| `TG_PROXY_PORT`         |  Telegram 代理的端口  | 非必须 | 例子：http代理 http://127.0.0.1:1080 则填写 1080 |
+* 请勿将Script项目的任何内容用于商业或非法目的，否则后果自负.
 
-##### 互助码类环境变量
+* 如果任何单位或个人认为该项目的脚本可能涉嫌侵犯其权利，则应及时通知并提供身份证明，所有权证明，我们将在收到认证文件后删除相关脚本.
 
-| Name                        | 归属             | 属性 | 说明                                                                                                                                                                |
-| --------------------------- | ------------------ | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `FRUITSHARECODES`           | 东东农场互助码 | 非必须 | 填写规则请看[jdFruitShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdFruitShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-| `PETSHARECODES`             | 东东萌宠互助码 | 非必须 | 填写规则请看[jdPetShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdPetShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-| `PLANT_BEAN_SHARECODES`     | 种豆得豆互助码 | 非必须 | 填写规则请看[jdPlantBeanShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdPlantBeanShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-| `SUPERMARKET_SHARECODES`    | 东东超市商圈互助码 | 非必须 | 填写规则请看[jdSuperMarketShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdSuperMarketShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-| `DDFACTORY_SHARECODES`      | 东东工厂互助码 | 非必须 | 填写规则请看[jdFactoryShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdFactoryShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-| `DREAM_FACTORY_SHARE_CODES` | 京喜工厂互助码 | 非必须 | 填写规则请看[jdDreamFactoryShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdDreamFactoryShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-| `JDZZ_SHARECODES`           | 京东赚赚互助码 | 非必须 | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则)                                                                       |
-| `JDJOY_SHARECODES`          | 疯狂的JOY互助码 | 非必须 | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则)                                                                       |
-| `BOOKSHOP_SHARECODES`       | 京东书店互助码 | 非必须 | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则)                                                                       |
-| `JXNC_SHARECODES`           | 京喜农场互助码 | 非必须 | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则)                                                                       |
+* 任何以任何方式查看此项目的人或直接或间接使用该Script项目的任何脚本的使用者都应仔细阅读此声明。lxk0301 保留随时更改或补充此免责声明的权利。一旦使用并复制了任何相关脚本或Script项目的规则，则视为您已接受此免责声明.
 
-##### 控制脚本功能环境变量
+ **您必须在下载后的24小时内从计算机或手机中完全删除以上内容.**  </br>
+> ***您使用或者复制了本仓库且本人制作的任何脚本，则视为`已接受`此声明，请仔细阅读*** 
 
-| Name                         | 归属                      | 属性 | 说明                                                                                                                                                                                                                                                   |
-| ---------------------------- | --------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `JD_BEAN_STOP`               | 京东                      | 非必须 | `jd_bean_sign.js`自定义延迟签到,单位毫秒.默认分批并发无延迟.延迟作用于每个签到接口,如填入延迟则切换顺序签到(耗时较长),如需填写建议输入数字`1`，详见[此处说明](https://github.com/NobyDa/Script/blob/master/JD-DailyBonus/JD_DailyBonus.js#L93) |
-| `JD_BEAN_SIGN_STOP_NOTIFY`   | 京东                      | 非必须 | `jd_bean_sign.js`脚本运行后不推送签到结果通知，默认推送，填`true`表示不发送通知                                                                                                                                              |
-| `JD_BEAN_SIGN_NOTIFY_SIMPLE` | 京东                      | 非必须 | `jd_bean_sign.js`脚本运行后推送签到结果简洁版通知，默认推送全部签到结果，填`true`表示推送简洁通知，[效果图](./icon/bean_sign_simple.jpg)                                                                        |
-| `PET_NOTIFY_CONTROL`         | 东东萌宠推送开关           | 非必须 | 控制京东萌宠是否静默运行,`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息)                                                                                                                             |
-| `FRUIT_NOTIFY_CONTROL`       | 东东农场推送开关           | 非必须 | 控制京东农场是否静默运行,`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息)                                                                                                                             |
-| `JD_JOY_REWARD_NOTIFY`       | 宠汪汪兑换京豆推送开关      | 非必须 | 控制`jd_joy_reward.js`脚本是否静默运行,`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息)                                                                                                                 |
-| `JD_818_SHAREID_NOTIFY`      | 京东818互助码通知开关      | 非必须 | 控制`jd_818.js`脚本是否在获取互助码后通知,`true`为是(发送推送通知消息),`false`为否(即：不发送推送通知消息)                                                                                                         |
-| `JOY_FEED_COUNT`             | 宠汪汪喂食数量             | 非必须 | 控制`jd_joy_feedPets.js`脚本喂食数量,可以填的数字10,20,40,80,其他数字不可.                                                                                                                                                           |
-| `JOY_HELP_FEED`              | 宠汪汪帮好友喂食           | 非必须 | 控制`jd_joy_steal.js`脚本是否给好友喂食,`false`为否,`true`为是(给好友喂食)                                                                                                                                                           |
-| `JOY_RUN_FLAG`               | 宠汪汪是否赛跑             | 非必须 | 控制`jd_joy.js`脚本是否参加赛跑(默认参加双人赛跑),`false`为否,`true`为是，脚本默认是`true`                                                                                                                                   |
-| `JOY_TEAM_LEVEL`             | 宠汪汪参加什么级别的赛跑    | 非必须 | 控制`jd_joy.js`脚本参加几人的赛跑,可选数字为`2`,`10`,`50`，其中2代表参加双人PK赛，10代表参加10人突围赛，50代表参加50人挑战赛(注：此项功能在`JOY_RUN_FLAG`为true的时候才生效)，如若想设置不同账号参加不同类别的比赛则用&区分即可(如下三个账号：`2&10&50`) |
-| `JD_JOY_REWARD_NAME`         | 宠汪汪积分兑换多少京豆      | 非必须 | 目前可填值为`20`或者`500`,脚本默认`20`,`0`表示不兑换京豆                                                                                                                                                                              |
-| `MARKET_COIN_TO_BEANS`       | 京小超兑换京豆数量          | 非必须 | 控制`jd_blueCoin.js`兑换京豆数量,可输入值为`20`或者`1000`的数字或者其他商品的名称,例如`碧浪洗衣凝珠`                                                                                                                  |
-| `MARKET_REWARD_NOTIFY`       | 京小超兑换奖品推送开关      | 非必须 | 控制`jd_blueCoin.js`兑换奖品成功后是否静默运行,`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息)                                                                                                    |
-| `SUPERMARKET_UPGRADE`        | 京小超自动升级             | 非必须 | 自动升级,顺序:解锁升级商品、升级货架,`true`表示自动升级,`false`表示关闭自动升级                                                                                                                                           |
-| `BUSINESS_CIRCLE_JUMP`       | 京小超自动更换商圈         | 非必须 | 小于对方300热力值自动更换商圈队伍,`true`表示运行,`false`表示禁止                                                                                                                                                                  |
-| `SUPERMARKET_LOTTERY`        | 京小超抽奖                 | 非必须 | 每天运行脚本是否使用金币去抽奖,`true`表示抽奖,`false`表示不抽奖                                                                                                                                                                  |
-| `FRUIT_BEAN_CARD`            | 农场使用水滴换豆卡           | 非必须 | 农场使用水滴换豆卡(如果出现限时活动时100g水换20豆,此时比浇水划算,推荐换豆),`true`表示换豆(不浇水),`false`表示不换豆(继续浇水),脚本默认是浇水                                                      |
-| `UN_SUBSCRIBES`              | jd_unsubscribe.js           | 非必须 | 共四个参数,换行隔开.四个参数分别表示`取关商品数量`,`取关店铺数量`,`遇到此商品不再进行取关`,`遇到此店铺不再进行取关`，[具体使用往下看](#取关店铺secret的说明)                           |
-| `UN_BIND_CARD_NUM`           | jd_unbind.js                | 非必须 | 注销京东已开的店铺会员，不是注销京东plus会员，个别店铺无法注销。此参数控制每次运行脚本时注销多少个店铺会员，默认200。                                                                             |
-| `UN_BIND_STOP_CARD`          | jd_unbind.js                | 非必须 | 注销京东已开的店铺会员，不是注销京东plus会员，个别店铺无法注销。遇到此参数设定的会员卡则跳过不注销，多个会员卡之间以`&`分隔，默认值"京东PLUS会员"。                                   |
-| `JDJOY_HELPSELF`             | 疯狂的JOY                   | 非必须 | 疯狂的JOY循环助力，`true`表示循环助力,`false`表示不循环助力，默认不开启循环助力。                                                                                                                                        |
-| `JDJOY_APPLYJDBEAN`          | 疯狂的JOY                   | 非必须 | 疯狂的JOY京豆兑换，目前最小值为500/1000京豆，默认不开启京豆兑换。                                                                                                                                                             |
-| `BUY_JOY_LEVEL`              | 疯狂的JOY                   | 非必须 | 疯狂的JOY自动购买什么等级的JOY                                                                                                                                                                                                               |
-| `MONEY_TREE_SELL_FRUIT`      | 摇钱树是否卖出金果           | 非必须 | 控制摇钱树脚本是否自动卖出金果兑换成金币，`true`卖出，`false`不卖出，默认`false`                                                                                                                                           |
-| `FACTORAY_WANTPRODUCT_NAME`  | 东东工厂心仪商品             | 非必须 | 提供心仪商品名称(请尽量填写完整和别的商品有区分度)，达到条件后兑换，如不提供则会兑换当前所选商品                                                                                                          |
-| `JXNCTOKENS`                 | 京喜农场TOKEN               | 非必须 | 每个账号 token 是一个 json，示例：{"farm_jstoken":"749a90f871adsfads8ffda7bf3b1576760","timestamp":"1610165423873","phoneid":"42c7e3dadfadsfdsaac-18f0e4f4a0cf"}，多账单间使用`&`或换行分开。                                    |
+## Script脚本列表
+#### 说明
+1. 其中 [jd_bean_sign.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bean_sign.js) 可N个京东账号，Node.js专用，核心脚本是JD_DailyBonus.js， IOS软件用户请使用NobyDa的 [JD_DailyBonus.js](https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js)
+2. 以字母排序。
 
-##### 互助码的填写规则
+| 活动时长 | 名称                            | 脚本                                                                                                   |
+| -------- | --------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| 长期   | 京豆变动通知                | [jd_bean_change.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bean_change.js)       |
+| 长期   | 领京豆额外奖励&抢京豆   | [jd_bean_home.js](https://raw.githubusercontent.com/lxk0302/jd_scripts/master/jd_bean_home.js)           |
+| 长期   | 京东多合一签到             | [jd_bean_sign.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bean_sign.js)           |
+| 长期   | 东东超市兑换奖品          | [jd_blueCoin.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_blueCoin.js)             |
+| 长期   | 口袋书店                      | [jd_bookshop.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bookshop.js)             |
+| 长期   | 京东汽车赛点兑换京豆    | [jd_car_exchange.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car_exchange.js)     |
+| 长期   | 签到领现金    | [jd_cash.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_cash.js)     |
+| 长期   | 京东汽车签到                | [jd_car.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car.js)                       |
+| 长期   | 摇京豆                         | [jd_club_lottery.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_club_lottery.js)     |
+| 长期   | 疯狂的JOY挂机                | [jd_crazy_joy_coin.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_crazy_joy_coin.js) |
+| 长期   | 疯狂的JOY日常任务          | [jd_crazy_joy.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_crazy_joy.js)           |
+| 长期   | 京东金融-天天提鹅         | [jd_daily_egg.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_daily_egg.js)           |
+| 长期   | 京喜工厂                      | [jd_dreamFactory.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_dreamFactory.js)     |
+| 长期   | 东东农场                      | [jd_fruit.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_fruit.js)                   |
+| 长期   | 宠汪汪                         | [jd_joy.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy.js)                       |
+| 长期   | 获取所有互助码             | [jd_get_share_code.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js) |
+| 长期   | 东东工厂                      | [jd_jdfactory.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdfactory.js)           |
+| 长期   | 京东赚赚                      | [jd_jdzz.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdzz.js)                     |
+| 长期   | 宠汪汪单独喂食             | [jd_joy_feedPets.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_feedPets.js)     |
+| 长期   | 宠汪汪强制为好友助力（iOS端专用） | [jd_joy_help.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_help.js)             |
+| 长期   | 宠汪汪聚宝盆辅助脚本（iOS端专用） | [jd_petTreasureBox.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_petTreasureBox.js) |
+| 长期   | 宠汪汪兑换奖品             | [jd_joy_reward.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_reward.js)         |
+| 长期   | 宠汪汪赛跑助力             | [jd_joy_run.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js)               |
+| 长期   | 宠汪汪偷好友狗粮与积分 | [jd_joy_steal.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_steal.js)           |
+| 长期   | 宠汪汪                         | [jd_joy.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy.js)                       |
+| 长期   | 京喜农场                      | [jd_jxnc.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jxnc.js)                     |
+| 长期   | 京东快递签到                | [jd_kd.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_kd.js)                         |
+| 长期   | 京东直播                      | [jd_live.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live.js)                     |
+| 长期   | 京东抽奖机                   | [jd_lotteryMachine.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_lotteryMachine.js) |
+| 长期   | 摇钱树                         | [jd_moneyTree.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_moneyTree.js)           |
+| 长期   | 点点券                         | [jd_necklace.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_necklace.js)             |
+| 长期   | 东东萌宠                      | [jd_pet.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_pet.js)                       |
+| 长期   | 金融养猪                      | [jd_pigPet.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_pigPet.js)                 |
+| 长期   | 种豆得豆                      | [jd_plantBean.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_plantBean.js)           |
+| 长期   | 京东排行榜签到得京豆    | [jd_rankingList.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_rankingList.js)       |
+| 长期   | 全民开红包                   | [jd_redPacket.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_redPacket.js)           |
+| 长期   | 进店领豆                      | [jd_shop.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_shop.js)                     |
+| 长期   | 东东小窝                      | [jd_small_home.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_small_home.js)         |
+| 长期   | 天天加速                      | [jd_speed.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_speed.js)                   |
+| 长期   | 东东超市                      | [jd_superMarket.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js)       |
+| 长期   | 十元街                         | [jd_syj.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_syj.js)                       |
+| 长期   | 注销京东会员卡             | [jd_unbind.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js)                 |
+| 长期   | 取关京东店铺和商品       | [jd_unsubscribe.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unsubscribe.js)       |
+| 长期   | 京喜签到       | [jx_sign.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jx_sign.js)       |
 
-  > 互助码如何获取：运行相应脚本后，在日志里面可以找到。(如何查看日志上面有写，详见 如何查看action运行情况)
+搬运脚本
+1.  【[@yangtingxiao](https://github.com/yangtingxiao)】京东抽奖机([jd_lotteryMachine.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_lotteryMachine.js))
+2.  【[@yangtingxiao](https://github.com/yangtingxiao)】京东排行榜([jd_rankingList.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_rankingList.js))
 
-同一个京东账号的好友互助码用@隔开,不同京东账号互助码用&或者换行隔开,下面给一个文字示例和具体互助码示例说明
+**脚本兼容: [QuantumultX](https://apps.apple.com/us/app/quantumult-x/id1443988620), [Surge](https://apps.apple.com/us/app/surge-4/id1442620678), [Loon](https://apps.apple.com/us/app/loon/id1373567447), 小火箭, JSBox, Node.js**
 
-两个账号各两个互助码的文字示例：
+**TODO**
+- [x] 所有活动互助码在一个脚本打印
+- [ ] 京喜工厂添加预测N天后可兑换功能
 
-  ```
-京东账号1的shareCode1@京东账号1的shareCode2&京东账号2的shareCode1@京东账号2的shareCode2
-  ```
+## 邀请码互助
+  - [邀请码互助入口](https://github.com/lxk0301/jd_scripts/discussions)
+  - [获取各类活动互助码脚本 jd_get_share_code.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js)
+  - [邀请码使用规范](githubAction.md#互助码类环境变量)(仅限云端)
+## 食用方法
 
- 两个账号各两个互助码的真实示例：
-  ``` 
-0a74407df5df4fa99672a037eec61f7e@dbb21614667246fabcfd9685b6f448f3&6fbd26cc27ac44d6a7fed34092453f77@61ff5c624949454aa88561f2cd721bf6&6fbd26cc27ac44d6a7fed34092453f77@61ff5c624949454aa88561f2cd721bf6
-  ```
+### 方法一：本地安装Node.js，下载本库脚本
+
+  - 教程请见：[EvineDeng/jd-base](https://github.com/EvineDeng/jd-base)，适用于以下系统：
+
+    1. Armbian/OpenWrt/Debian/Ubuntu/CentOS/Fedora/RedHat等Linux系统
+
+    2. Android
+
+    3. MacOS
+
+### 方法二：云服务器、腾讯云函数等等
+
+  - 需自行有云服务器，云函数等
+  - 腾讯云云函数 [快速部署教程](./backUp/tencentscf.md)（免费）
+  - 腾讯云云函数控制台使用 [教程说明](./backUp/iCloud.md)
+  - 腾讯云云函数 [GitHub Action部署教程](./backUp/tencentscf.md#github-action-部署)
+       
+ 
+### 方法三：Docker（NAS或VPS用户）
+
+ - 可以精确控制任务运行时间，有二种办法：[docker办法一](https://github.com/lxk0301/jd_scripts/tree/master/docker)、[docker办法二（和本地安装Node.js类似）](https://github.com/EvineDeng/jd-base)
+ - [环境变量集合](https://github.com/lxk0301/jd_scripts/blob/master/githubAction.md)
+ 
+#### 注：以上三种运行机制都是Node.js，故您需仔细阅读下面几点
 
 
+  - 如果使用方法一与方法二，需自行提供京东cookie填写到 [jdCookie.js](https://github.com/lxk0301/jd_scripts/blob/master/jdCookie.js) 里面
 
-#### 取关店铺secret的说明
+   
+  - 获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://github.com/lxk0301/jd_scripts/blob/master/backUp/GetJdCookie.md) , [插件获取京东cookie教程](https://github.com/lxk0301/jd_scripts/blob/master/backUp/GetJdCookie2.md)
 
- > secret依次是`取关商品数`,`取关店铺数`,`遇到此商品不再进行取关`,`遇到此店铺不再进行取关`
+  - 方法三Docker安装Cookie请见各自的说明。
 
-例如我要取关 `100`个商品，`100`个店铺，商品遇到商品关键字 `iPhone12` 停止取关，店铺遇到 `Apple京东自营旗舰店` 不再取关
-则使用`换行`或者`&`隔开即可,
-下面给出换行隔开示例:
+### 方法四：iOS系统的代理软件（QuantumultX, Surge, Loon, 小火箭）
 
- ```
-100
-100
-iPhone12
-Apple京东自营旗舰店
- ```
+  - [京东cookie获取脚本 JD_extra_cookie.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/JD_extra_cookie.js)
 
-下面给出`&`符号隔开示例:
- ```
-100&100&iPhone12&Apple京东自营旗舰店
- ```
+### 赞赏码(开发维护不易,请赏杯茶水费)
+<div align=center><img width="250" height="250" src="https://raw.githubusercontent.com/lxk0301/jd_scripts/master/icon/thanks.jpg"/></div>
 
-#### 关于脚本推送通知频率
+### 特别感谢(排名不分先后)：
+* [@NobyDa](https://github.com/NobyDa)
 
-  > 如果你填写了推送通知方式中的某一种通知所需环境变量，那么脚本通知情况如下：
+* [@chavyleung](https://github.com/chavyleung)
 
-  > 目前默认只有jd_fruit.js,jd_pet.js,jd_bean_sign.js,jd_818.js四个脚本每次运行后都通知
+* [@liuxiaoyucc](https://github.com/liuxiaoyucc)
 
-  ```
-jd_plantBean.js是每周一收集京豆后通知一次，
-jd_joy_reward.js是每次兑换到了京豆通知一次，
-jd_blueCoin.js是每次兑换到了奖品通知一次，
-jd_818.js是每次获取新的互助码会通知一次，以帮助您快速上车，
-其余的脚本平常运行都是不通知，只有在京东cookie失效后，才会推送通知    
-  ```
+* [@Zero-S1](https://github.com/Zero-S1)
 
+* [@uniqueque](https://github.com/uniqueque)
+
+
+* [@nzw9314](https://github.com/nzw9314)
