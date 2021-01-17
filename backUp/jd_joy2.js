@@ -9,10 +9,10 @@ Combine from Zero-S1/JD_tools(https://github.com/Zero-S1/JD_tools)
 // quantumultx
 // [task_local]
 // #京东宠汪汪
-// 15 1,2 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy.js, tag=京东宠汪汪, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdww.png, enabled=true
+// 15 1,2 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy.js, tag=京东宠汪汪, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdww.png, enabled=true
 // Loon
 // [Script]
-// cron "15 1,2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy.js,tag=京东宠汪汪
+// cron "15 1,2 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy.js,tag=京东宠汪汪
 const name = '京东宠汪汪';
 const $ = new Env(name);
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -228,7 +228,7 @@ function* step() {
       console.log(`任务信息${JSON.stringify(petTaskConfig)}`)
       if (petTaskConfig.errorCode === 'B0001') {
         $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
-        $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+        $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
         if ($.isNode() && notify.SCKEY) {
           notify.sendNotify(`京东账号${UserName}cookie已失效`, '请重新登录获取cookie');
         }
@@ -239,7 +239,7 @@ function* step() {
       }
     }
   } else {
-    $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+    $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
     $.done();
     return
   }

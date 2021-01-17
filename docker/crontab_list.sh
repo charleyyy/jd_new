@@ -1,23 +1,16 @@
 #必须要的默认定时任务请勿删除
-52 */1 * * * sh /scripts/docker/default_task.sh >> /scripts/logs/default_task.log 2>&1
+52 */1 * * * docker_entrypoint.sh >> /scripts/logs/default_task.log 2>&1
 # 每3天的23:50分清理一次日志
 50 23 */3 * * rm -rf /scripts/logs/*.log
 
 ##############短期活动##############
-# 秒杀红包雨(2020.12.31活动过期)
-40 8 1-31 12 * node /scripts/jd_ms_redrain.js >> /scripts/logs/jd_ms_redrain.log 2>&1
-# 健康抽奖机(2020.12.31活动过期)
-10 0 1-31 12 * node /scripts/jd_health.js >> /scripts/logs/jd_health.log 2>&1
-# 直播红包雨(2020.12.31活动过期)
-0 0,20,9-23/2 15-31 12 * node /scripts/jd_live_redrain.js >> /scripts/logs/jd_live_redrain.log 2>&1
-# 京东金融打卡领年终奖(2020.12.31活动过期)
-10 6 1-31 12 * node /scripts/jr_sign.js >> /scripts/logs/jr_sign.log 2>&1
-
+#年货节(活动时间：2021年1月9日-2021年2月9日)
+10 8 * * * node /scripts/jd_nh.js >> /scripts/logs/jd_nh.log 2>&1
 ##############长期活动##############
 # 签到
-0 0,12,18 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
+0 0,18 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
 # 京小超兑换奖品
-0 0 * * * node /scripts/jd_blueCoin.js >> /scripts/logs/jd_blueCoin.log 2>&1
+0,30 0 * * * node /scripts/jd_blueCoin.js >> /scripts/logs/jd_blueCoin.log 2>&1
 # 摇京豆
 0 0 * * * node /scripts/jd_club_lottery.js >> /scripts/logs/jd_club_lottery.log 2>&1
 # 东东农场
@@ -66,13 +59,33 @@
 36 * * * * node /scripts/jd_jdfactory.js >> /scripts/logs/jd_jdfactory.log 2>&1
 # 十元街
 36 8,18 * * * node /scripts/jd_syj.js >> /scripts/logs/jd_syj.log 2>&1
-# 京东代属(注:限校园用户可使用)
-36 9 * * * node /scripts/jd_ds.js >> /scripts/logs/jd_ds.log 2>&1
 # 京东快递签到
 23 1 * * * node /scripts/jd_kd.js >> /scripts/logs/jd_kd.log 2>&1
 # 京东汽车(签到满500赛点可兑换500京豆)
-33 2 * * * node /scripts/jd_car.js >> /scripts/logs/jd_car.log 2>&1
+0 0 * * * node /scripts/jd_car.js >> /scripts/logs/jd_car.log 2>&1
 # 领京豆额外奖励(每日可获得3京豆)
 33 4 * * * node /scripts/jd_bean_home.js >> /scripts/logs/jd_bean_home.log 2>&1
 # 京东直播(每日18豆)
 10-20/5 11 * * * node /scripts/jd_live.js >> /scripts/logs/jd_live.log 2>&1
+# 微信小程序京东赚赚
+10 11 * * * node /scripts/jd_jdzz.js >> /scripts/logs/jd_jdzz.log 2>&1
+# 宠汪汪邀请助力
+10 10,11 * * * node /scripts/jd_joy_run.js >> /scripts/logs/jd_joy_run.log 2>&1
+# 注销京东已开的店铺会员，不是注销京东plus会员，个别店铺无法注销
+44 4 * * 6 node /scripts/jd_unbind.js >> /scripts/logs/jd_unbind.log 2>&1
+# crazyJoy自动每日任务
+10 7 * * * node /scripts/jd_crazy_joy.js >> /scripts/logs/jd_crazy_joy.log 2>&1
+# 京东汽车旅程赛点兑换金豆
+0 0 * * * node /scripts/jd_car_exchange.js >> /scripts/logs/jd_car_exchange.log 2>&1
+# 导到所有互助码
+47 7 * * * node /scripts/jd_get_share_code.js >> /scripts/logs/jd_get_share_code.log 2>&1
+# 口袋书店
+7 8,12,18 * * * node /scripts/jd_bookshop.js >> /scripts/logs/jd_bookshop.log 2>&1
+# 京喜农场
+0 9,12,18 * * * node /scripts/jd_jxnc.js >> /scripts/logs/jd_jxnc.log 2>&1
+# 签到领现金
+27 7 * * * node /scripts/jd_cash.js >> /scripts/logs/jd_cash.log 2>&1
+# 京喜app签到
+39 7 * * * node /scripts/jx_sign.js >> /scripts/logs/jx_sign.log 2>&1
+#京东家庭号(暂不知最佳cron)
+*/20 * * * * node /scripts/jd_family.js >> /scripts/logs/jd_family.log 2>&1

@@ -2,23 +2,23 @@
 一键获取我仓库所有需要互助类脚本的互助码(邀请码)(其中京东赚赚jd_jdzz.js如果今天达到5人助力则不能提取互助码)
 没必要设置(cron)定时执行，需要的时候，自己手动执行一次即可
 
-更新地址：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js
+更新地址：https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #获取互助码
-20 13 * * 6 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js, tag=获取互助码, enabled=true
+20 13 * * 6 https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js, tag=获取互助码, enabled=true
 
 ================Loon==============
 [Script]
-cron "20 13 * * 6" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js, tag=获取互助码
+cron "20 13 * * 6" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js, tag=获取互助码
 
 ===============Surge=================
-获取互助码 = type=cron,cronexp="20 13 * * 6",wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js
+获取互助码 = type=cron,cronexp="20 13 * * 6",wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js
 
 ============小火箭=========
-获取互助码 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js, cronexpr="20 13 * * 6", timeout=200, enable=true
+获取互助码 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js, cronexpr="20 13 * * 6", timeout=200, enable=true
  */
 const $ = new Env("获取互助码");
 const JD_API_HOST = "https://api.m.jd.com/client.action";
@@ -321,8 +321,13 @@ function getJxNc(){
             if (safeGet(data)) {
               data = JSON.parse(data);
               if (data["ret"] === 0) {
-                console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场助力码】${data["smp"]}`);
-                console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场active】 ${$.info.active}`);
+                console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场助力码】${data.smp}`);
+
+                if (data.active) {
+                  console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场active】${data.active}`);
+                } else {
+                  console.log( `【账号${$.index}（${$.nickName || $.UserName}）京喜农场】未选择种子，请先去京喜农场选择种子`);
+                }
               }
             } else {
               console.log(`京喜农场返回值解析异常：${JSON.stringify(data)}`);
@@ -422,7 +427,7 @@ async function getJdZZ() {
               data = JSON.parse(data);
               if (data.data.shareTaskRes) {
                 console.log(`【账号${$.index}（${$.nickName || $.UserName}）京东赚赚】${data.data.shareTaskRes.itemId}`);
-                              } else {
+              } else {
                 //console.log(`已满5人助力,暂时看不到您的京东赚赚好友助力码`)
               }
             }
@@ -445,7 +450,7 @@ async function getJdZZ() {
         'Connection': 'keep-alive',
         'Content-Type': 'application/json',
         'Referer': 'http://wq.jd.com/wxapp/pages/hd-interaction/index/index',
-        'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
       }
@@ -614,7 +619,7 @@ async function getJoy(){
         'Host': 'api.m.jd.com',
         'Accept': '*/*',
         'Connection': 'keep-alive',
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
         'Accept-Language': 'zh-cn',
         'Referer': 'https://crazy-joy.jd.com/',
         'origin': 'https://crazy-joy.jd.com',
@@ -681,7 +686,7 @@ function TotalBean() {
         "Connection": "keep-alive",
         "Cookie": cookie,
         "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
       }
     }
     $.post(options, (err, resp, data) => {

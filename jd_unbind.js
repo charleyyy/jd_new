@@ -6,14 +6,14 @@
 ==========Quantumult X==========
 [task_local]
 #注销京东会员卡
-55 23 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js, tag=注销京东会员卡, enabled=true
+55 23 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js, tag=注销京东会员卡, enabled=true
 =======Loon========
 [Script]
-cron "55 23 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js,tag=注销京东会员卡
+cron "55 23 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js,tag=注销京东会员卡
 ========Surge==========
-注销京东会员卡 = type=cron,cronexp="55 23 * * *",wake-system=1,timeout=620,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js
+注销京东会员卡 = type=cron,cronexp="55 23 * * *",wake-system=1,timeout=620,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js
 =======小火箭=====
-注销京东会员卡 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js, cronexpr="10 23 * * *", timeout=200, enable=true
+注销京东会员卡 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js, cronexpr="10 23 * * *", timeout=200, enable=true
  */
 const $ = new Env('注销京东会员卡');
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -34,14 +34,15 @@ if ($.isNode()) {
   cookiesArr.reverse();
   cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
   cookiesArr.reverse();
+  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
 }
-const jdNotify = $.getdata('jdUnsubscribeNotify');//是否关闭通知，false打开通知推送，true关闭通知推送
-let cardPageSize = $.getdata('jdUnsubscribePageSize') || 200;// 运行一次取消多少个会员卡。数字0表示不注销任何会员卡
-let stopCards = $.getdata('jdUnsubscribeStopCards') || ['京东PLUS会员'];//遇到此会员卡不再进行注销
+const jdNotify = $.getdata('jdUnbindCardNotify');//是否关闭通知，false打开通知推送，true关闭通知推送
+let cardPageSize = 200;// 运行一次取消多少个会员卡。数字0表示不注销任何会员卡
+let stopCards = `京东PLUS会员`;//遇到此会员卡跳过注销,多个使用&分开
 const JD_API_HOST = 'https://api.m.jd.com/';
 !(async () => {
   if (!cookiesArr[0]) {
-    $.msg('【京东账号一】注销京东会员卡失败', '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+    $.msg('【京东账号一】注销京东会员卡失败', '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
   }
   await requireConfig()
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -56,12 +57,10 @@ const JD_API_HOST = 'https://api.m.jd.com/';
       await TotalBean();
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
-        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
+        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
 
         if ($.isNode()) {
           await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-        } else {
-          $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
         }
         continue
       }
@@ -119,7 +118,7 @@ function getCards() {
         "Accept": "*/*",
         "Connection": "keep-alive",
         "Cookie": cookie,
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
         "Accept-Language": "zh-cn",
         "Accept-Encoding": "gzip, deflate, br"
       },
@@ -153,7 +152,7 @@ function unsubscribeCard(vendorId) {
         "Accept": "*/*",
         "Connection": "keep-alive",
         'origin': 'https://shopmember.m.jd.com',
-        'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
         'Referer': `https://shopmember.m.jd.com/member/memberCloseAccount?venderId=${vendorId}`,
         'Cookie': cookie,
         "Accept-Language": "zh-cn",
@@ -191,7 +190,7 @@ function TotalBean() {
         "Connection": "keep-alive",
         "Cookie": cookie,
         "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
       }
     }
     $.post(options, (err, resp, data) => {
@@ -221,24 +220,23 @@ function TotalBean() {
 }
 function requireConfig() {
   return new Promise(resolve => {
-    if ($.isNode() && process.env.UN_BIND_CARD_NUM) {
-      $.UN_BIND_NUM = process.env.UN_BIND_CARD_NUM
-    }
-    if ($.isNode() && process.env.UN_BIND_STOP_CARD) {
-      if (process.env.UN_BIND_STOP_CARD.indexOf('&') > -1) {
-        $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('&');
-      } else if (process.env.UN_BIND_STOP_CARD.indexOf('@') > -1) {
-        $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('@');
-      } else if (process.env.UN_BIND_STOP_CARD.indexOf('\n') > -1) {
-        $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('\n');
-      } else if (process.env.UN_BIND_STOP_CARD.indexOf('\\n') > -1) {
-        $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('\\n');
+    $.UN_BIND_NUM = $.isNode() ? (process.env.UN_BIND_CARD_NUM ? process.env.UN_BIND_CARD_NUM : cardPageSize) : ($.getdata('UN_BIND_CARD_NUM') ? $.getdata('UN_BIND_CARD_NUM') : cardPageSize);
+    $.UN_BIND_STOP_CARD = $.isNode() ? (process.env.UN_BIND_STOP_CARD ? process.env.UN_BIND_STOP_CARD : stopCards) : ($.getdata('UN_BIND_STOP_CARD') ? $.getdata('UN_BIND_STOP_CARD') : stopCards);
+    if ($.UN_BIND_STOP_CARD) {
+      if ($.UN_BIND_STOP_CARD.indexOf('&') > -1) {
+        $.UN_BIND_STOP_CARD = $.UN_BIND_STOP_CARD.split('&');
+      } else if ($.UN_BIND_STOP_CARD.indexOf('@') > -1) {
+        $.UN_BIND_STOP_CARD = $.UN_BIND_STOP_CARD.split('@');
+      } else if ($.UN_BIND_STOP_CARD.indexOf('\n') > -1) {
+        $.UN_BIND_STOP_CARD = $.UN_BIND_STOP_CARD.split('\n');
+      } else if ($.UN_BIND_STOP_CARD.indexOf('\\n') > -1) {
+        $.UN_BIND_STOP_CARD = $.UN_BIND_STOP_CARD.split('\\n');
       } else {
-        $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split();
+        $.UN_BIND_STOP_CARD = $.UN_BIND_STOP_CARD.split();
       }
     }
-    cardPageSize = $.UN_BIND_NUM || cardPageSize
-    stopCards = $.UN_BIND_STOP_CARD || stopCards
+    cardPageSize = $.UN_BIND_NUM;
+    stopCards = $.UN_BIND_STOP_CARD;
     resolve()
   })
 }

@@ -3,7 +3,7 @@
 仅仅是收集一下京东双十一全名营业每秒产生的金币
 
 每小时的第20分运行一次
-20 * * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_collectProduceScore.js
+20 * * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_collectProduceScore.js
  */
 const $ = new Env('京东全民营业领金币');
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -25,7 +25,7 @@ let UserName = '';
 const JD_API_HOST = `https://api.m.jd.com/client.action`;
 !(async () => {
   if (!cookiesArr[0]) {
-    $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+    $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
   console.log(`\n小功能::仅仅是收集一下京东双十一全名营业每秒产生的金币,建议一个小时跑一次脚本\n`)
@@ -124,7 +124,7 @@ function taskPostUrl(functionId, body = {}) {
     url: `${JD_API_HOST}?functionId=${functionId}`,
     body: `functionId=${functionId}&body=${escape(JSON.stringify(body))}&client=wh5&clientVersion=1.0.0`,
     headers: {
-      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
       'Content-Type': 'application/x-www-form-urlencoded',
       'Host': 'api.m.jd.com',
       'Cookie': cookie,

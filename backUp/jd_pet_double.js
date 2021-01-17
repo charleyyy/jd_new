@@ -58,7 +58,7 @@ gen.next();
  */
 function* entrance() {
   if (!cookie) {
-    $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+    $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
     $.done();
     return
   }
@@ -86,8 +86,8 @@ function* entrance() {
     }
   }
   for (let item of taskInfoKey) {
-    console.log(`新任务 【${taskInfo[item].title}】 功能未开发，请反馈给脚本维护者@lxk0301\n`);
-    $.msg($.name, subTitle, `新的任务 【${taskInfo[item].title}】 功能未开发，请反馈给脚本维护者@lxk0301\n`, {"open-url": "https://t.me/JD_fruit_pet"})
+    console.log(`新任务 【${taskInfo[item].title}】 功能未开发，请反馈给脚本维护者@LXK9301\n`);
+    $.msg($.name, subTitle, `新的任务 【${taskInfo[item].title}】 功能未开发，请反馈给脚本维护者@LXK9301\n`, {"open-url": "https://t.me/JD_fruit_pet"})
   }
   yield feedPetsAgain();//所有任务做完后，检测剩余狗粮是否大于110g,大于就继续投食
   yield energyCollect();
@@ -369,7 +369,7 @@ function initPetTown() {
     } else if (response.code === '0' && response.resultCode === '2001'){
       console.log(`初始化萌宠失败:  ${response.message}`);
       $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
-      $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+      $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
       $.done();
     }
   })
