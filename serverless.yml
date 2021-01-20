@@ -51,7 +51,7 @@ inputs:
           name: redPacket_shop_unsubscribe_unbind_lotteryMachine_small_home
           cronExpression: "0 10 0 * * * *"
           enable: true
-          argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_unbind&jd_lotteryMachine&jd_small_home
+          argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_lotteryMachine&jd_small_home
     - timer: #京东天天加速 #天天提鹅 #京东炸年兽
         parameters:
           name: jd_speed_jd_daily_egg_nian
