@@ -7,7 +7,7 @@ name: jdscript # (必选) 组件实例名称。
 #组件参数配置
 inputs:
   name: scf-${name} # 云函数名称，默认为 ${name}-${stage}-${app}
-  enableRoleAuth: false # 默认会尝试创建 SCF_QcsRole 角色，如果不需要配置成 false 即可
+  enableRoleAuth: true # 默认会尝试创建 SCF_QcsRole 角色，如果不需要配置成 false 即可
   src: ./
   handler: index.main_handler #入口
   runtime: Nodejs12.16 # 运行环境 默认 Nodejs10.15
@@ -36,7 +36,7 @@ inputs:
           argument: jd_fruit&jd_pet&jd_bookshop&jd_jxnc
     - timer: # 宠汪汪喂食# 宠汪汪# 摇钱树# 京东种豆得豆# 京喜工厂 #东东工厂 #京东炸年兽领爆竹
         parameters:
-          name: feedPets_joy_moneyTree_plantBean_dreamFactory_jdftory_nC
+          name: feedPets_joy_moneyTree_plantBean_dreamFactory_jdfactory_nC
           cronExpression: "0 3 */1 * * * *"
           enable: true
           argument: jd_joy_feedPets&jd_joy&jd_moneyTree&jd_plantBean&jd_dreamFactory&jd_jdfactory&jd_nianCollect
