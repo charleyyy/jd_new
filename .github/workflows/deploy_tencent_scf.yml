@@ -21,7 +21,7 @@ jobs:
       - name: "安装依赖和serverless工具"
         run: |
           npm install
-          npm install tencentcloud-sdk-nodejs
+          sudo npm install serverless -g
 
       - name: "将Secrets里面配置的变量添加到severless.yml里面作为环境变量"
         run: |
@@ -158,7 +158,7 @@ jobs:
         run: |
           zip -r myfile.zip ./*
       - name: "部署到腾讯云函数"
-        run: node scf.js
+        run: serverless deploy
         env:
           STAGE: dev
           SERVERLESS_PLATFORM_VENDOR: tencent
