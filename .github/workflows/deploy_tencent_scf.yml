@@ -154,9 +154,11 @@ jobs:
           JD_WECHAT_USER_AGENT: ${{ secrets.JD_WECHAT_USER_AGENT}}
           DREAMFACTORY_FORBID_ACCOUNT: ${{ secrets.DREAMFACTORY_FORBID_ACCOUNT}}
           JDFACTORY_FORBID_ACCOUNT: ${{ secrets.JDFACTORY_FORBID_ACCOUNT}}
-
+      - name: "压缩文件夹"
+        run: |
+          zip -r myfile.zip ./*
       - name: "部署到腾讯云函数"
-        run: serverless deploy
+        run: node scf.js
         env:
           STAGE: dev
           SERVERLESS_PLATFORM_VENDOR: tencent
