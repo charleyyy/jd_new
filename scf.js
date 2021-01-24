@@ -22,7 +22,7 @@ const clientConfig = {
 const client = new ScfClient(clientConfig);
 const params = {
   "Handler": "index.main_handler",
-  "FunctionName": "scf-jdscript",
+  "FunctionName": "jd",
   "ZipFile": contents_in_base64
 };
 client.UpdateFunctionCode(params).then(
