@@ -11,7 +11,7 @@ const clientConfig = {
     secretId: process.env.TENCENT_SECRET_ID,
     secretKey: process.env.TENCENT_SECRET_KEY,
   },
-  region: "ap-hongkong",
+  region: "ap-beijing",
   profile: {
     httpProfile: {
       endpoint: "scf.tencentcloudapi.com",
