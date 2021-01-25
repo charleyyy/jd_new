@@ -22,7 +22,7 @@ const clientConfig = {
 const client = new ScfClient(clientConfig);
 let params = {
   "Handler": "index.main_handler",
-  "FunctionName": "jd", // 云函数程序名，例如 jd_scripts
+  "FunctionName": process.env.TENCENT_FUNCTION_NAME, // 云函数程序名，例如 jd_scripts
   "ZipFile": contents_in_base64
 };
 client.UpdateFunctionCode(params).then(
