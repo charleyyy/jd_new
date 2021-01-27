@@ -17,10 +17,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+
       - name: "安装依赖"
         run: |
           npm install
-          sudo npm install serverless -g
+          npm install tencentcloud-sdk-nodejs
+          npm install js-yaml
 
       - name: "将Secrets里面配置的变量添加到severless.yml里面作为环境变量"
         run: |
@@ -54,6 +56,7 @@ jobs:
           if [ $BOOKSHOP_SHARECODES ]; then sed -i "/variables/a\      BOOKSHOP_SHARECODES: $BOOKSHOP_SHARECODES" serverless.yml; fi;
           if [ $JD_CASH_SHARECODES ]; then sed -i "/variables/a\      JD_CASH_SHARECODES: $JD_CASH_SHARECODES" serverless.yml; fi;
           if [ $JXNC_SHARECODES ]; then sed -i "/variables/a\      JXNC_SHARECODES: $JXNC_SHARECODES" serverless.yml; fi;
+          if [ $JDSGMH_SHARECODES ]; then sed -i "/variables/a\      JDSGMH_SHARECODES: $JDSGMH_SHARECODES" serverless.yml; fi;
           if [ $JDNIAN_SHARECODES ]; then sed -i "/variables/a\      JDNIAN_SHARECODES: $JDNIAN_SHARECODES" serverless.yml; fi;
           if [ $JDSXSY_SHARECODES ]; then sed -i "/variables/a\      JDSXSY_SHARECODES: $JDSXSY_SHARECODES" serverless.yml; fi;
           if [ $JD_BEAN_STOP ]; then sed -i "/variables/a\      JD_BEAN_STOP: $JD_BEAN_STOP" serverless.yml; fi;
@@ -121,6 +124,7 @@ jobs:
           BOOKSHOP_SHARECODES: ${{ secrets.BOOKSHOP_SHARECODES}}
           JD_CASH_SHARECODES: ${{ secrets.JD_CASH_SHARECODES}}
           JXNC_SHARECODES: ${{ secrets.JXNC_SHARECODES}}
+          JDSGMH_SHARECODES: ${{ secrets.JDSGMH_SHARECODES}}
           JDNIAN_SHARECODES: ${{ secrets.JDNIAN_SHARECODES}}
           JDSXSY_SHARECODES: ${{ secrets.JDSXSY_SHARECODES}}
           JD_BEAN_STOP: ${{ secrets.JD_BEAN_STOP}}
@@ -156,9 +160,10 @@ jobs:
           DREAMFACTORY_FORBID_ACCOUNT: ${{ secrets.DREAMFACTORY_FORBID_ACCOUNT}}
           JDFACTORY_FORBID_ACCOUNT: ${{ secrets.JDFACTORY_FORBID_ACCOUNT}}
 
-
+      - name: "压缩文件夹"
+        run: zip -r myfile.zip ./*
       - name: "部署到腾讯云函数"
-        run: serverless deploy
+        run: node tencentscf.js
         env:
           STAGE: dev
           SERVERLESS_PLATFORM_VENDOR: tencent
