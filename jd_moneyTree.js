@@ -1,18 +1,25 @@
 /*
-京东摇钱树 ：https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_moneyTree.js
+京东摇钱树 ：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_moneyTree.js
 更新时间：2020-11-16
+活动入口：京东APP我的-更多工具-摇钱树
 京东摇钱树支持京东双账号
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
+===============Quantumultx===============
+[task_local]
+#京东摇钱树
+3 0-23/2 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_moneyTree.js, tag=京东摇钱树, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdyqs.png, enabled=true
+
+==============Loon===========
+[Script]
+cron "3 0-23/2 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_moneyTree.js,tag=京东摇钱树
+
+===============Surge===========
+京东摇钱树 = type=cron,cronexp="3 0-23/2 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_moneyTree.js
+
+============小火箭=========
+京东摇钱树 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_moneyTree.js, cronexpr="3 0-23/2 * * *", timeout=3600, enable=true
 */
-// quantumultx
-// [task_local]
-// #京东摇钱树
-// 3 */2 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_moneyTree.js, tag=京东摇钱树, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdyqs.png, enabled=true
-// Loon
-// [Script]
-// cron "3 */2 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_moneyTree.js,tag=京东摇钱树
-// Surge
-//京东摇钱树 = type=cron,cronexp="3 */2 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_moneyTree.js
+
 const $ = new Env('京东摇钱树');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -73,18 +80,22 @@ let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0;
       $.done();
     })
 async function jd_moneyTree() {
-  const userRes = await user_info();
-  if (!userRes || !userRes.realName) return
-  await signEveryDay();
-  await dayWork();
-  await harvest();
-  await sell();
-  await myWealth();
-  await stealFriendFruit()
+  try {
+    const userRes = await user_info();
+    if (!userRes || !userRes.realName) return
+    await signEveryDay();
+    await dayWork();
+    await harvest();
+    await sell();
+    await myWealth();
+    await stealFriendFruit()
 
-  $.log(`\n${message}\n`);
-  if (!jdNotify || jdNotify === 'false') {
-    $.msg($.name, subTitle, message);
+    $.log(`\n${message}\n`);
+    if (!jdNotify || jdNotify === 'false') {
+      $.msg($.name, subTitle, message);
+    }
+  } catch (e) {
+    $.logErr(e)
   }
 }
 function user_info() {
@@ -325,23 +336,28 @@ function signIndex() {
 }
 function signEveryDay() {
   return new Promise(async (resolve) => {
-    let signIndexRes = await signIndex();
-    if (signIndexRes.resultCode === 0) {
-      console.log(`每日签到条件查询:${signIndexRes.resultData.data.canSign === 2 ? '可以签到' : '已经签到过了'}`);
-      if (signIndexRes.resultData && signIndexRes.resultData.data.canSign == 2) {
-        console.log('准备每日签到')
-        let signOneRes = await signOne(signIndexRes.resultData.data.signDay);
-        console.log(`第${signIndexRes.resultData.data.signDay}日签到结果:${JSON.stringify(signOneRes)}`);
-        if (signIndexRes.resultData.data.signDay === 7) {
-          let getSignAwardRes = await getSignAward();
-          console.log(`店铺券（49-10）领取结果：${JSON.stringify(getSignAwardRes)}`)
-          if (getSignAwardRes.resultCode === 0 && getSignAwardRes.data.code === 0) {
-            message += `【7日签到奖励领取】${getSignAwardRes.datamessage}\n`
+    try {
+      let signIndexRes = await signIndex();
+      if (signIndexRes.resultCode === 0) {
+        console.log(`每日签到条件查询:${signIndexRes.resultData.data.canSign === 2 ? '可以签到' : '已经签到过了'}`);
+        if (signIndexRes.resultData && signIndexRes.resultData.data.canSign == 2) {
+          console.log('准备每日签到')
+          let signOneRes = await signOne(signIndexRes.resultData.data.signDay);
+          console.log(`第${signIndexRes.resultData.data.signDay}日签到结果:${JSON.stringify(signOneRes)}`);
+          if (signIndexRes.resultData.data.signDay === 7) {
+            let getSignAwardRes = await getSignAward();
+            console.log(`店铺券（49-10）领取结果：${JSON.stringify(getSignAwardRes)}`)
+            if (getSignAwardRes.resultCode === 0 && getSignAwardRes.data.code === 0) {
+              message += `【7日签到奖励领取】${getSignAwardRes.datamessage}\n`
+            }
           }
         }
       }
+    } catch (e) {
+      $.logErr(e);
+    } finally {
+      resolve()
     }
-    resolve()
   })
 }
 function signOne(signDay) {
