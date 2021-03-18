@@ -10,7 +10,8 @@
       "name": "京东多账号 Ck 管理",
       "keys": ["CookiesJD"],
       "descs_html": [
-        "请勿随意在输入框修改内容，建议通过脚本去获取cookie，若要修改，请按照JSON 格式修改。",
+        "请勿随意在输入框修改内容，建议通过脚本去获取cookie，若要修改，请按照JSON 格式修改（<a href=\"https://www.bejson.com/json/format\">可使用此JSON校验</a> ）。",
+        "示例：[{\"userName\":\"jd_xxx\",\"cookie\":\"pt_key=AAJ;pt_pin=jd_xxx;\"},{\"userName\":\"jd_66\",\"cookie\":\"pt_key=AAJ;pt_pin=jd_66;\"}]",
         "脚本地址【<a href=\"https://gitee.com/lxk0301/jd_scripts/raw/master/JD_extra_cookie.js\">京东多 CK获取</a>】,并按照此脚本注释进行配置",
         "使用方式【<a href=\"https://home.m.jd.com/myJd/newhome.action\">个人中心</a>】获取对应的数据Code",
         "注：如与NobyDa的京东cookie重复，建议在此处删除重复的cookie"
@@ -32,7 +33,7 @@
       ],
       "author": "@dompling",
       "repo": "https://github.com/dompling/Script",
-      "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra.js"
+      "script": "https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js"
     },
     {
       "id": "JD_UA",
@@ -42,12 +43,38 @@
       ],
       "descs_html": [
         "自行抓包京东APP获得，UserAgent类似下面：",
-        "jdapp;iPhone;9.3.0;14.2;88732f840b77821b345bf07fd71f609e6ff12f43;network/4g;ADID/0E38E9F1-4B4C-40A4-A479-DD15E58A5623;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone11,8;addressid/2005183373;supportBestPay/0;appBuild/167436;pushNoticeIsOpen/0;jdSupportDarkMode/0;pv/142.46;apprpd/CouponCenter;ref/NewCouponCenterViewController;psq/44;ads/;psn/88732f840b77821b345bf07fd71f609e6ff12f43|551;jdv/0|kong|t_1000170135|tuiguang|notset|1607732510603|1607732510;adk/;app_device/IOS;pap/JA2015_311210|9.2.5|IOS 14.2;Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"
+        "jdapp;iPhone;9.3.0;14.2;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"
       ],
       "settings": [
         {
           "id": "JDUA",
           "name": "自定义京东脚本的UserAgent",
+          "val": "",
+          "type": "text",
+          "desc": "不懂不知不会UserAgent的请不要随意填写内容，如需填写使用建议使用京东APP的UserAgent"
+        }
+      ],
+      "author": "@lxk0301",
+      "repo": "https://gitee.com/lxk0301/jd_scripts/tree/master",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/jd.png",
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png"
+      ]
+    },
+    {
+      "id": "JS_UA",
+      "name": "自定义京东极速版脚本的UserAgent",
+      "keys": [
+        "JS_UA"
+      ],
+      "descs_html": [
+        "自行抓包京东极速版APP获得，UserAgent类似下面：",
+        "jdltapp;iPad;3.1.0;14.4;network/wifi;Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"
+      ],
+      "settings": [
+        {
+          "id": "JS_UA",
+          "name": "自定义京东极速版脚本的UserAgent",
           "val": "",
           "type": "text",
           "desc": "不懂不知不会UserAgent的请不要随意填写内容，如需填写使用建议使用京东APP的UserAgent"
@@ -858,7 +885,7 @@
         {
           "id": "jd_jxFactory",
           "name": "京喜工厂好友邀请码 列表",
-          "val": "V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k=@Bo-jnVs_m9uBvbRzraXcSA==\n\n-OvElMzqeyeGBWazWYjI1Q==",
+          "val": "",
           "type": "textarea",
           "autoGrow": true,
           "rows": 8,
@@ -872,6 +899,60 @@
       "author": "@lxk0301",
       "repo": "https://gitee.com/lxk0301/jd_scripts/tree/master",
       "script": "https://gitee.com/lxk0301/jd_scripts/raw/master/jd_dreamFactory.js"
+    },
+    {
+      "id": "jd_jxCFD_invites",
+      "name": "京喜财富岛",
+      "keys": ["jd_jxCFD"],
+      "descs_html": [
+        "请在输入框输入跟你互助的京喜财富岛的好友互助码",
+        "同一个京东账号的好友邀请码用@隔开,不同京东账号互助码用换行(return按键)隔开",
+        "下方输入框给出一个示例,自己使用时删除示例邀请码然后按示例填写即可"
+      ],
+      "settings": [
+        {
+          "id": "jd_jxCFD",
+          "name": "京喜财富岛好友邀请码 列表",
+          "val": "",
+          "type": "textarea",
+          "autoGrow": true,
+          "rows": 8,
+          "desc": "京喜财富岛邀请码,同一个京东账号的好友邀请码用@隔开,不同京东账号互助码用换行(return按键)隔开"
+        }
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/58xinian/icon/master/jxcfd_mini.png",
+        "https://raw.githubusercontent.com/58xinian/icon/master/jxcfd.png"
+      ],
+      "author": "@lxk0301",
+      "repo": "https://gitee.com/lxk0301/jd_scripts/tree/master",
+      "script": "https://gitee.com/lxk0301/jd_scripts/raw/master/jd_cfd.js"
+    },
+    {
+      "id": "jd_jxd",
+      "name": "京小兑",
+      "keys": [],
+      "settings": [
+        {
+          "id": "jdJxdExchange",
+          "name": "自动把抽奖卷兑换为兑币",
+          "val": false,
+          "type": "boolean",
+          "desc": "自动把抽奖卷兑换为兑币,默认关闭"
+        }
+      ],
+      "author": "@lxk0301",
+      "repo": "https://gitee.com/lxk0301/jd_scripts/tree/master",
+      "scripts":[
+        {
+          "name" : "京小兑",
+          "script" : "https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jxd.js"
+        }
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/58xinian/icon/master/jd_jxd_mini.png",
+        "https://raw.githubusercontent.com/58xinian/icon/master/jd_jxd.png"
+      ]
     }
   ]
 }

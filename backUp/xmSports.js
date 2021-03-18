@@ -14,19 +14,19 @@ APP Store下载小米运动APP
 hostname = account.huami.com
 Surge
 [Script]
-小米运动 = type=cron,cronexp="15 17 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/xmSports.js
-小米运动获取Token = type=http-response,pattern=^https:\/\/account\.huami\.com\/v2\/client\/login, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/xmSports.js
+小米运动 = type=cron,cronexp="15 17 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/backUp/xmSports.js
+小米运动获取Token = type=http-response,pattern=^https:\/\/account\.huami\.com\/v2\/client\/login, requires-body=1, max-size=0, script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/backUp/xmSports.js
 圈X
 [task_local]
 # 小米运动
-15 17 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/xmSports.js, tag=小米运动, img-url=https://raw.githubusercontent.com/58xinian/icon/master/xmyd.png, enabled=true
+15 17 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/backUp/xmSports.js, tag=小米运动, img-url=https://raw.githubusercontent.com/58xinian/icon/master/xmyd.png, enabled=true
 [rewrite_local]
 # 小米运动获取Token
-^https:\/\/account\.huami\.com\/v2\/client\/login url script-response-body https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/xmSports.js
+^https:\/\/account\.huami\.com\/v2\/client\/login url script-response-body https://gitee.com/lxk0301/jd_scripts/raw/master/backUp/xmSports.js
 Loon
 [Script]
-cron "15 17 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/xmSports.js, tag=小米运动
-http-response ^https:\/\/account\.huami\.com\/v2\/client\/login script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/xmSports.js, requires-body=true, timeout=10, tag=小米运动获取Token
+cron "15 17 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/backUp/xmSports.js, tag=小米运动
+http-response ^https:\/\/account\.huami\.com\/v2\/client\/login script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/backUp/xmSports.js, requires-body=true, timeout=3600, tag=小米运动获取Token
  */
 
 const $ = new Env('小米运动');
@@ -73,7 +73,9 @@ async function start() {
       $.msg($.name, '失败', `Token已失效，请重新获取`)
     }
   } else {
-    $.msg($.name, `失败`, '暂无Token')
+    $.log('暂无Token')
+    $.log(`\n\n获取TOKEN方法：\nAPP Store下载小米运动APP\n登入小米运动(登录方式必须是手机号码+密码(没有就用手机号码注册),下面的第三方账号(小米账号,Apple,微信)授权登录不行)\n登录成功后在 我的->第三方接入->绑定支付宝,微信\n小米运动只要不退出登录，就会自动获取新的token,即永久有效`)
+    //$.msg($.name, `失败`, '暂无Token')
   }
   $.done()
 }
