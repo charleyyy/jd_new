@@ -67,6 +67,7 @@ jobs:
       JXNCTOKENS: ${{ secrets.JXNCTOKENS}}
       DREAMFACTORY_FORBID_ACCOUNT: ${{ secrets.DREAMFACTORY_FORBID_ACCOUNT}}
       JDFACTORY_FORBID_ACCOUNT: ${{ secrets.JDFACTORY_FORBID_ACCOUNT}}
+      JD_CITY_EXCHANGE: ${{ secrets.JD_CITY_EXCHANGE}}
       
     steps:
       - name: Checkout
@@ -148,6 +149,7 @@ jobs:
           if [ $JXNCTOKENS ]; then sed -i "/variables/a\      JXNCTOKENS: $JXNCTOKENS" serverless.yml; fi;
           if [ $DREAMFACTORY_FORBID_ACCOUNT ]; then sed -i "/variables/a\      DREAMFACTORY_FORBID_ACCOUNT: $DREAMFACTORY_FORBID_ACCOUNT" serverless.yml; fi;
           if [ $JDFACTORY_FORBID_ACCOUNT ]; then sed -i "/variables/a\      JDFACTORY_FORBID_ACCOUNT: $JDFACTORY_FORBID_ACCOUNT" serverless.yml; fi;
+          if [ $JD_CITY_EXCHANGE ]; then sed -i "/variables/a\      JD_CITY_EXCHANGE: $JD_CITY_EXCHANGE" serverless.yml; fi;
           cat serverless.yml
           env
 
