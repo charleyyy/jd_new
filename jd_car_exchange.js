@@ -52,9 +52,9 @@ const JD_API_HOST = 'https://car-member.jd.com/api/';
     for (let i = 0; i < cookiesArr.length; i++) {
       if (cookiesArr[i]) {
         cookie = cookiesArr[i];
-        $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+        $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
         $.index = i + 1;
-        console.log(`京东账号${$.index} ${$.UserName}`)
+        console.log(`*********京东账号${$.index} ${$.UserName}*********`)
         $.isLogin = true;
         $.nickName = '';
         message = '';
@@ -85,11 +85,12 @@ function exchange() {
     $.post(taskUrl('v1/user/exchange/bean'), (err, resp, data) => {
       try {
         if (err) {
-          data = JSON.parse(resp.body)
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} user/exchange/bean API请求失败，请检查网路重试\n`)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            console.log(`兑换结果：${JSON.stringify(data)}`)
+            console.log(`兑换结果：${JSON.stringify(data)}\n`)
           }
         }
       } catch (e) {
