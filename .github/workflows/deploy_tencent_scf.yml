@@ -25,10 +25,6 @@ jobs:
       IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY}}
       PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN}}
       PUSH_PLUS_USER: ${{ secrets.PUSH_PLUS_USER}}
-      TG_PROXY_HOST: ${{ secrets.TG_PROXY_HOST}}
-      TG_PROXY_PORT: ${{ secrets.TG_PROXY_PORT}}
-      TG_PROXY_AUTH: ${{ secrets.TG_PROXY_AUTH}}
-      TG_API_HOST: ${{ secrets.TG_API_HOST}}
       FRUITSHARECODES: ${{ secrets.FRUITSHARECODES}}
       PETSHARECODES: ${{ secrets.PETSHARECODES}}
       PLANT_BEAN_SHARECODES: ${{ secrets.PLANT_BEAN_SHARECODES}}
@@ -41,7 +37,6 @@ jobs:
       JXNC_SHARECODES: ${{ secrets.JXNC_SHARECODES}}
       JDSGMH_SHARECODES: ${{ secrets.JDSGMH_SHARECODES}}
       JDCFD_SHARECODES: ${{ secrets.JDCFD_SHARECODES}}
-      JDHEALTH_SHARECODES: ${{ secrets.JDHEALTH_SHARECODES}}
       JD_BEAN_STOP: ${{ secrets.JD_BEAN_STOP}}
       JD_BEAN_SIGN_STOP_NOTIFY: ${{ secrets.JD_BEAN_SIGN_STOP_NOTIFY}}
       JD_BEAN_SIGN_NOTIFY_SIMPLE: ${{ secrets.JD_BEAN_SIGN_NOTIFY_SIMPLE}}
@@ -50,7 +45,6 @@ jobs:
       CASH_NOTIFY_CONTROL: ${{ secrets.CASH_NOTIFY_CONTROL}}
       DDQ_NOTIFY_CONTROL: ${{ secrets.DDQ_NOTIFY_CONTROL}}
       JDZZ_NOTIFY_CONTROL: ${{ secrets.JDZZ_NOTIFY_CONTROL}}
-      MONEYTREE_NOTIFY_CONTROL: ${{ secrets.MONEYTREE_NOTIFY_CONTROL}}
       JD_JOY_REWARD_NOTIFY: ${{ secrets.JD_JOY_REWARD_NOTIFY}}
       JOY_FEED_COUNT: ${{ secrets.JOY_FEED_COUNT}}
       JOY_HELP_FEED: ${{ secrets.JOY_HELP_FEED}}
@@ -59,8 +53,6 @@ jobs:
       JOY_RUN_NOTIFY: ${{ secrets.JOY_RUN_NOTIFY}}
       JOY_RUN_HELP_MYSELF: ${{ secrets.JOY_RUN_HELP_MYSELF}}
       JD_JOY_REWARD_NAME: ${{ secrets.JD_JOY_REWARD_NAME}}
-      MARKET_COIN_TO_BEANS: ${{ secrets.MARKET_COIN_TO_BEANS}}
-      MARKET_REWARD_NOTIFY: ${{ secrets.MARKET_REWARD_NOTIFY}}
       JOIN_PK_TEAM: ${{ secrets.JOIN_PK_TEAM}}
       SUPERMARKET_LOTTERY: ${{ secrets.SUPERMARKET_LOTTERY}}
       FRUIT_BEAN_CARD: ${{ secrets.FRUIT_BEAN_CARD}}
@@ -114,10 +106,6 @@ jobs:
           if [ $IGOT_PUSH_KEY ]; then sed -i "/variables/a\      IGOT_PUSH_KEY: $IGOT_PUSH_KEY" serverless.yml; fi;
           if [ $PUSH_PLUS_TOKEN ]; then sed -i "/variables/a\      PUSH_PLUS_TOKEN: $PUSH_PLUS_TOKEN" serverless.yml; fi;
           if [ $PUSH_PLUS_USER ]; then sed -i "/variables/a\      PUSH_PLUS_USER: $PUSH_PLUS_USER" serverless.yml; fi;
-          if [ $TG_PROXY_HOST ]; then sed -i "/variables/a\      TG_PROXY_HOST: $TG_PROXY_HOST" serverless.yml; fi;
-          if [ $TG_PROXY_PORT ]; then sed -i "/variables/a\      TG_PROXY_PORT: $TG_PROXY_PORT" serverless.yml; fi;
-          if [ $TG_PROXY_AUTH ]; then sed -i "/variables/a\      TG_PROXY_AUTH: $TG_PROXY_AUTH" serverless.yml; fi;
-          if [ $TG_API_HOST ]; then sed -i "/variables/a\      TG_API_HOST: $TG_API_HOST" serverless.yml; fi;
           if [ $FRUITSHARECODES ]; then sed -i "/variables/a\      FRUITSHARECODES: $FRUITSHARECODES" serverless.yml; fi;
           if [ $PETSHARECODES ]; then sed -i "/variables/a\      PETSHARECODES: $PETSHARECODES" serverless.yml; fi;
           if [ $PLANT_BEAN_SHARECODES ]; then sed -i "/variables/a\      PLANT_BEAN_SHARECODES: $PLANT_BEAN_SHARECODES" serverless.yml; fi;
@@ -131,7 +119,6 @@ jobs:
           if [ $JXNC_SHARECODES ]; then sed -i "/variables/a\      JXNC_SHARECODES: $JXNC_SHARECODES" serverless.yml; fi;
           if [ $JDSGMH_SHARECODES ]; then sed -i "/variables/a\      JDSGMH_SHARECODES: $JDSGMH_SHARECODES" serverless.yml; fi;
           if [ $JDCFD_SHARECODES ]; then sed -i "/variables/a\      JDCFD_SHARECODES: $JDCFD_SHARECODES" serverless.yml; fi;
-          if [ $JDHEALTH_SHARECODES ]; then sed -i "/variables/a\      JDHEALTH_SHARECODES: $JDHEALTH_SHARECODES" serverless.yml; fi;
           if [ $JD_BEAN_STOP ]; then sed -i "/variables/a\      JD_BEAN_STOP: $JD_BEAN_STOP" serverless.yml; fi;
           if [ $JD_BEAN_SIGN_STOP_NOTIFY ]; then sed -i "/variables/a\      JD_BEAN_SIGN_STOP_NOTIFY: $JD_BEAN_SIGN_STOP_NOTIFY" serverless.yml; fi;
           if [ $JD_BEAN_SIGN_NOTIFY_SIMPLE ]; then sed -i "/variables/a\      JD_BEAN_SIGN_NOTIFY_SIMPLE: $JD_BEAN_SIGN_NOTIFY_SIMPLE" serverless.yml; fi;
@@ -148,8 +135,6 @@ jobs:
           if [ $JOY_RUN_NOTIFY ]; then sed -i "/variables/a\      JOY_RUN_NOTIFY: $JOY_RUN_NOTIFY" serverless.yml; fi;
           if [ $JOY_RUN_HELP_MYSELF ]; then sed -i "/variables/a\      JOY_RUN_HELP_MYSELF: $JOY_RUN_HELP_MYSELF" serverless.yml; fi;
           if [ $JD_JOY_REWARD_NAME ]; then sed -i "/variables/a\      JD_JOY_REWARD_NAME: $JD_JOY_REWARD_NAME" serverless.yml; fi;
-          if [ $MARKET_COIN_TO_BEANS ]; then sed -i "/variables/a\      MARKET_COIN_TO_BEANS: $MARKET_COIN_TO_BEANS" serverless.yml; fi;
-          if [ $MARKET_REWARD_NOTIFY ]; then sed -i "/variables/a\      MARKET_REWARD_NOTIFY: $MARKET_REWARD_NOTIFY" serverless.yml; fi;
           if [ $JOIN_PK_TEAM ]; then sed -i "/variables/a\      JOIN_PK_TEAM: $JOIN_PK_TEAM" serverless.yml; fi;
           if [ $SUPERMARKET_LOTTERY ]; then sed -i "/variables/a\      SUPERMARKET_LOTTERY: $SUPERMARKET_LOTTERY" serverless.yml; fi;
           if [ $FRUIT_BEAN_CARD ]; then sed -i "/variables/a\      FRUIT_BEAN_CARD: $FRUIT_BEAN_CARD" serverless.yml; fi;
@@ -157,7 +142,6 @@ jobs:
           if [ $JDJOY_HELPSELF ]; then sed -i "/variables/a\      JDJOY_HELPSELF: $JDJOY_HELPSELF" serverless.yml; fi;
           if [ $JDJOY_APPLYJDBEAN ]; then sed -i "/variables/a\      JDJOY_APPLYJDBEAN: $JDJOY_APPLYJDBEAN" serverless.yml; fi;
           if [ $BUY_JOY_LEVEL ]; then sed -i "/variables/a\      BUY_JOY_LEVEL: $BUY_JOY_LEVEL" serverless.yml; fi;
-          if [ $MONEY_TREE_SELL_FRUIT ]; then sed -i "/variables/a\      MONEY_TREE_SELL_FRUIT: $MONEY_TREE_SELL_FRUIT" serverless.yml; fi;
           if [ $FACTORAY_WANTPRODUCT_NAME ]; then sed -i "/variables/a\      FACTORAY_WANTPRODUCT_NAME: $FACTORAY_WANTPRODUCT_NAME" serverless.yml; fi;
           if [ $DREAMFACTORY_FORBID_ACCOUNT ]; then sed -i "/variables/a\      DREAMFACTORY_FORBID_ACCOUNT: $DREAMFACTORY_FORBID_ACCOUNT" serverless.yml; fi;
           if [ $JDFACTORY_FORBID_ACCOUNT ]; then sed -i "/variables/a\      JDFACTORY_FORBID_ACCOUNT: $JDFACTORY_FORBID_ACCOUNT" serverless.yml; fi;
