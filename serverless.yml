@@ -64,7 +64,7 @@ inputs:
           cronExpression: "0 15 */6 * * * *"
           enable: true
           argument: jd_superMarket
-    - timer: #京豆变动通知 #疯狂的joy #监控crazyJoy分红 #京东排行榜 #领京豆额外奖励 #闪购盲盒 #京小兑 #球队赢好礼
+    - timer: #京豆变动通知 #疯狂的joy #监控crazyJoy分红 #京东排行榜 #领京豆额外奖励 #京东保价 #闪购盲盒 #京小兑 #球队赢好礼
         parameters:
           name: beanchange_crazyjoy_crazyjoybonus_rankingList_beanhome_sgmh_jxd_tcl
           cronExpression: "0 30 7 * * * *"
