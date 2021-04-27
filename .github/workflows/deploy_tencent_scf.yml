@@ -94,7 +94,7 @@ jobs:
           if [ $JXNC_NOTIFY_LEVEL ]; then sed -i "/variables/a\      JXNC_NOTIFY_LEVEL: $JXNC_NOTIFY_LEVEL" serverless.yml; fi;
           cat serverless.yml
           env
-        env: #因为直接读取secrets里面的值很多字符不会自动转译，导致写入serverless.yml异常，所以设置到环境变量，在读取环境变量转译过的值
+    env: #因为直接读取secrets里面的值很多字符不会自动转译，导致写入serverless.yml异常，所以设置到环境变量，在读取环境变量转译过的值
       JD_COOKIE: ${{ secrets.JD_COOKIE}}
       JD_DEBUG: ${{ secrets.JD_DEBUG}}
       JD_USER_AGENT: ${{ secrets.JD_USER_AGENT}}
