@@ -51,7 +51,7 @@ inputs:
           name: redPacket_shop_unsubscribe_lotteryMachine_car_ms
           cronExpression: "0 10 0 * * * *"
           enable: true
-          argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_lotteryMachine&jd_car&jd_ms
+          argument: jd_redPacket&jd_shop&jd_lotteryMachine&jd_car&jd_ms
     - timer: #天天提鹅
         parameters:
           name: dailyegg
