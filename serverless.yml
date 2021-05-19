@@ -45,7 +45,7 @@ inputs:
           name: joyreward_cash_necklace_smallhome_cfd_live_health_dailylottery
           cronExpression: "0 0 0-16/8,20 * * * *"
           enable: true
-          argument: jd_joy_reward&jd_cash&jd_necklace&jd_small_home&jd_cfd&jd_live&jd_health&jd_daily_lottery
+          argument: jd_joy_reward&jd_cash&jd_necklace&jd_small_home&jd_cfd&jd_live&jd_health&jd_daily_lottery&jd_nzmh
     - timer: #京东全民开红包 #进店领豆 #取关京东店铺商品 #京东抽奖机 #京东汽车 #京东秒秒币
         parameters:
           name: redPacket_shop_unsubscribe_lotteryMachine_car_ms
