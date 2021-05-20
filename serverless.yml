@@ -40,9 +40,9 @@ inputs:
           cronExpression: "0 3 */1 * * * *"
           enable: true
           argument: jd_joy_feedPets&jd_joy&jd_moneyTree&jd_plantBean&jd_dreamFactory&jd_jdfactory&jd_health_collect
-    - timer: #宠汪汪积分兑换京豆 #签到领现金 #点点券 #东东小窝 #京喜财富岛 #京东直播 #东东健康社区 #每日抽奖
+    - timer: #宠汪汪积分兑换京豆 #签到领现金 #点点券 #东东小窝 #京喜财富岛 #京东直播 #东东健康社区 #每日抽奖 #女装魔盒
         parameters:
-          name: joyreward_cash_necklace_smallhome_cfd_live_health_dailylottery
+          name: joyreward_cash_necklace_smallhome_cfd_live_health_dailylottery_nzmh
           cronExpression: "0 0 0-16/8,20 * * * *"
           enable: true
           argument: jd_joy_reward&jd_cash&jd_necklace&jd_small_home&jd_cfd&jd_live&jd_health&jd_daily_lottery&jd_nzmh
@@ -51,25 +51,25 @@ inputs:
           name: redPacket_shop_unsubscribe_lotteryMachine_car_ms
           cronExpression: "0 10 0 * * * *"
           enable: true
-          argument: jd_redPacket&jd_shop&jd_lotteryMachine&jd_car&jd_ms
+          argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_lotteryMachine&jd_car&jd_ms
     - timer: #天天提鹅
         parameters:
           name: dailyegg
           cronExpression: "0 8 */3 * * * *"
           enable: true
           argument: jd_daily_egg
-    - timer: #东东超市 #十元街
+    - timer: #东东超市 #十元街 #跳跳乐
         parameters:
-          name: superMarket_syj
+          name: superMarket_syj_jump
           cronExpression: "0 15 */1 * * * *"
           enable: true
-          argument: jd_superMarket&jd_syj
+          argument: jd_superMarket&jd_syj&jd_jump
     - timer: #京豆变动通知 #疯狂的joy #监控crazyJoy分红 #京东排行榜 #领京豆额外奖励 #京东保价 #闪购盲盒
         parameters:
           name: beanchange_crazyjoy_crazyjoybonus_rankingList_beanhome_price_sgmh
           cronExpression: "0 30 7 * * * *"
           enable: true
-          argument: jd_bean_change&jd_crazy_joy&jd_crazy_joy_bonus&jd_rankingList&jd_bean_home&jd_sgmh
+          argument: jd_bean_change&jd_crazy_joy&jd_crazy_joy_bonus&jd_rankingList&jd_bean_home&jd_price&jd_sgmh
     - timer: #金融养猪 #京东快递 #京东赚赚 #京喜签到 #京东极速版红包 #领金贴
         parameters:
           name: pigPet_kd_jdzz_sign_speedredpocke_jintie
