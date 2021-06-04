@@ -67,12 +67,19 @@ const JD_API_HOST = 'https://api.m.jd.com/';
       await showMsg();
     }
   }
+<<<<<<< HEAD
   console.log(`\n开始自己京东内部相互助力\n`);
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
       for (let vo of $.shareCodeList) {
         if (!vo) continue;
+=======
+  for (let i = 0; i < cookiesArr.length; i++) {
+    if (cookiesArr[i]) {
+      cookie = cookiesArr[i];
+      for(let vo of $.shareCodeList){
+>>>>>>> d32a249775bb5bc2b6a7cb59924a60b520ea89af
         await doTask(vo)
       }
     }
@@ -248,7 +255,11 @@ function taskList() {
                     if (vo.taskType === '6'){
                       const shareCode = bo.itemToken
                       console.log(`好友助力码:${shareCode}`)
+<<<<<<< HEAD
                       if (shareCode) $.shareCodeList.push(shareCode)
+=======
+                      $.shareCodeList.push(shareCode)
+>>>>>>> d32a249775bb5bc2b6a7cb59924a60b520ea89af
                     }
                     else if(vo.taskType!=='9') {
                       await doTask(bo.itemToken)
@@ -286,9 +297,13 @@ function startGame() {
               await $.wait(10*1000)
               await reportGame(data.result.passScore + 2)
             } else {
+<<<<<<< HEAD
               // if (data.retCode === '1102') $.canDo = false
               console.log(`游戏开始失败`, JSON.stringify(data))
               $.canDo = false
+=======
+              console.log(`游戏开始失败`)
+>>>>>>> d32a249775bb5bc2b6a7cb59924a60b520ea89af
             }
           }
         }
