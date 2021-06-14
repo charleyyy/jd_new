@@ -1,12 +1,12 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: 「活动」星空探秘
+name: 动物联盟
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 17,5 * 5 *'
+    - cron: '12 * * * *'
   repository_dispatch:
     types: adolf_haier
 jobs:
@@ -33,7 +33,7 @@ jobs:
           npm install
       - name: '运行 「活动」欢乐大逃亡'
         run: 
-          node a-tmxk.js
+          node zoo.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
