@@ -22,7 +22,7 @@ inputs:
           cronExpression: "0 0 0 * * * *"
           enable: true
           argument: jd_bean_sign
-    - timer: #东东超市兑换奖品 #摇京豆 #京东汽车兑换 #家电星推官 #家电星推官好友互助
+    - timer: #东东超市兑换奖品 #摇京豆 #京东汽车兑换
         parameters:
           name: blueCoin_clublottery_carexchange
           cronExpression: "0 0 0 * * * *"
@@ -58,12 +58,12 @@ inputs:
           cronExpression: "0 8 */3 * * * *"
           enable: true
           argument: jd_daily_egg&jd_carnivalcity
-    - timer: #东东超市 #十元街 #动物联萌 #翻翻乐
+    - timer: #东东超市 #十元街 #翻翻乐
         parameters:
-          name: superMarket_syj_zoo_bigwinner
+          name: superMarket_syj_bigwinner
           cronExpression: "0 15 */1 * * * *"
           enable: true
-          argument: jd_superMarket&jd_syj&jd_zoo&jd_big_winner
+          argument: jd_superMarket&jd_syj&jd_big_winner
     - timer: #京豆变动通知 #疯狂的joy #监控crazyJoy分红 #京东排行榜 #领京豆额外奖励 #京东保价 #闪购盲盒 #新潮品牌狂欢 #京喜领88元红包
         parameters:
           name: beanchange_crazyjoy_crazyjoybonus_rankingList_beanhome_price_sgmh_mcxhd_jxlhb
